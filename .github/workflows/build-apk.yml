@@ -26,17 +26,13 @@ jobs:
         with:
           accept-android-sdk-licenses: true
 
-      - name: Set up Gradle 8.4
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: '8.4'
-
-      - name: Generate Project Structure and Build Files
+      - name: Generate Project Files and Build APK
         run: |
+          # 1. Create project directories
           mkdir -p app/src/main/java/com/smartcalculator/app
           mkdir -p app/src/main/assets
 
-          # 1. Map HTML source file
+          # 2. Map HTML source file
           if [ -f index.html ]; then
             cp index.html app/src/main/assets/index.html
           elif [ -f Calculator.html ]; then
@@ -47,14 +43,14 @@ jobs:
             echo "<html><body><h1>Calculator App</h1></body></html>" > app/src/main/assets/index.html
           fi
 
-          # 2. Map App Icon (Optional)
+          # 3. Map App Icon (Optional)
           ICON_FILE=$(find . -maxdepth 1 -iname "icon.svg" | head -n 1)
           if [ -n "$ICON_FILE" ]; then
             mkdir -p app/src/main/res/drawable
             cp "$ICON_FILE" app/src/main/res/drawable/icon.svg
           fi
 
-          # 3. MainActivity.java with secure local file permissions
+          # 4. Write MainActivity.java with secure local file permissions
           cat << 'EOF' > app/src/main/java/com/smartcalculator/app/MainActivity.java
           package com.smartcalculator.app;
 
@@ -81,7 +77,7 @@ jobs:
           }
           EOF
 
-          # 4. AndroidManifest.xml
+          # 5. Write AndroidManifest.xml
           cat << 'EOF' > app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android"
               package="com.smartcalculator.app">
@@ -102,7 +98,7 @@ jobs:
           </manifest>
           EOF
 
-          # 5. Root build.gradle
+          # 6. Write Root build.gradle
           cat << 'EOF' > build.gradle
           buildscript {
               repositories {
@@ -121,7 +117,7 @@ jobs:
           }
           EOF
 
-          # 6. App build.gradle
+          # 7. Write App-level build.gradle
           cat << 'EOF' > app/build.gradle
           apply plugin: 'com.android.application'
 
@@ -145,13 +141,20 @@ jobs:
           }
           EOF
 
-          # 7. Settings.gradle
+          # 8. Write settings.gradle
           cat << 'EOF' > settings.gradle
           include ':app'
           EOF
 
-      - name: Build Debug APK
-        run: gradle assembleDebug
+          # 9. Download and install standalone Gradle 8.4 binary locally
+          echo "Downloading Gradle 8.4..."
+          wget -q https://services.gradle.org/distributions/gradle-8.4-bin.zip
+          unzip -q gradle-8.4-bin.zip
+          export PATH="$PWD/gradle-8.4/bin:$PATH"
+
+          # 10. Execute build
+          echo "Executing Gradle build..."
+          gradle assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
