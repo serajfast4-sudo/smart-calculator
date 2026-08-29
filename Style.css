@@ -1,17 +1,18 @@
 <style>
         :root {
-            --bg1: #1e1b4b;
-            --bg2: #0f172a;
-            --bg3: #164e63;
-            --glass: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.16);
-            --op: rgba(37, 99, 235, 0.55);
-            --sci: rgba(56, 189, 248, 0.12);
-            --action: rgba(220, 38, 38, 0.55);
-            --eq: rgba(22, 163, 74, 0.6);
-            --text: #f8fafc;
-            --muted: #94a3b8;
-            --accent: #7dd3fc;
+            /* Changed from blue gradients to pure/matte black tones */
+            --bg1: #000000;
+            --bg2: #09090b;
+            --bg3: #121214;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --op: rgba(38, 38, 42, 0.8);      /* Dark charcoal operator buttons */
+            --sci: rgba(24, 24, 27, 0.9);     /* Deep black scientific buttons */
+            --action: rgba(63, 63, 70, 0.8);  /* Muted clear/delete */
+            --eq: rgba(217, 119, 6, 0.9);     /* Clean amber execute accent */
+            --text: #f4f4f5;
+            --muted: #a1a1aa;
+            --accent: #fbbf24;                /* Warm amber text highlight */
         }
 
         * {
@@ -23,11 +24,7 @@
         }
 
         body {
-            background:
-                radial-gradient(circle at 15% 20%, rgba(99, 102, 241, 0.35), transparent 45%),
-                radial-gradient(circle at 85% 15%, rgba(56, 189, 248, 0.3), transparent 40%),
-                radial-gradient(circle at 50% 90%, rgba(20, 184, 166, 0.25), transparent 45%),
-                linear-gradient(160deg, var(--bg1), var(--bg2) 60%, var(--bg3));
+            background: linear-gradient(160deg, var(--bg1), var(--bg2) 60%, var(--bg3));
             background-attachment: fixed;
             color: var(--text);
             height: 100vh;
@@ -56,25 +53,19 @@
 
         .hist-toggle {
             background: var(--glass);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
             border: 1px solid var(--glass-border);
             color: var(--muted);
             padding: 4px 12px;
             border-radius: 12px;
             font-size: 0.85rem;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
             cursor: pointer;
         }
 
         .screen {
-            background: rgba(2, 6, 23, 0.5);
-            backdrop-filter: blur(24px) saturate(160%);
-            -webkit-backdrop-filter: blur(24px) saturate(160%);
+            background: #000000;
             border-radius: 20px;
             padding: 16px;
             border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
@@ -83,7 +74,7 @@
 
         .expr {
             color: var(--muted);
-            font-size: 1rem;
+            font-size: 1.0rem;
             text-align: right;
             min-height: 1.2rem;
         }
@@ -118,9 +109,6 @@
             justify-content: center;
             user-select: none;
             touch-action: manipulation;
-            backdrop-filter: blur(18px) saturate(180%);
-            -webkit-backdrop-filter: blur(18px) saturate(180%);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 6px 14px rgba(0,0,0,0.25);
         }
 
         button::before {
@@ -128,13 +116,13 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 55%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0) 100%);
+            background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0) 100%);
             pointer-events: none;
         }
 
         button:active {
             transform: scale(0.96);
-            filter: brightness(0.88);
+            filter: brightness(0.85);
         }
 
         .b-num { background-color: var(--glass); }
@@ -147,11 +135,8 @@
             position: fixed;
             top: 0; right: -100%;
             width: 80%; max-width: 320px; height: 100%;
-            background: rgba(15, 23, 42, 0.55);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            background: #050507;
             border-left: 1px solid var(--glass-border);
-            box-shadow: -10px 0 30px rgba(0,0,0,0.45);
             transition: right 0.3s ease;
             z-index: 10;
             padding: 20px;
@@ -163,11 +148,10 @@
         .drawer-list { list-style: none; overflow-y: auto; flex: 1; margin: 15px 0; }
         .drawer-item {
             padding: 10px;
-            background: rgba(2, 6, 23, 0.4);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: #111115;
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 10px;
             margin-bottom: 8px;
         }
     </style>
+
