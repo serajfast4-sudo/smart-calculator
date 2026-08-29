@@ -31,7 +31,7 @@ jobs:
         with:
           gradle-version: '8.4'
 
-      - name: Initialize Project Structure and Build Files
+      - name: Generate Project Structure and Build Files
         run: |
           mkdir -p app/src/main/java/com/smartcalculator/app
           mkdir -p app/src/main/assets
@@ -54,7 +54,7 @@ jobs:
             cp "$ICON_FILE" app/src/main/res/drawable/icon.svg
           fi
 
-          # 3. MainActivity.java (Configured with secure local file permissions)
+          # 3. MainActivity.java with secure local file permissions
           cat << 'EOF' > app/src/main/java/com/smartcalculator/app/MainActivity.java
           package com.smartcalculator.app;
 
