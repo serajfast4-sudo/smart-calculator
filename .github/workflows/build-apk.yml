@@ -25,6 +25,7 @@ jobs:
         uses: android-actions/setup-android@v3
         with:
           accept-android-sdk-licenses: true
+          packages: 'platforms;android-34 build-tools;34.0.0 platform-tools'
 
       - name: Generate Project Files and Build APK
         run: |
@@ -117,7 +118,7 @@ jobs:
           }
           EOF
 
-          # 7. Write App-level build.gradle
+          # 7. Write App-level build.gradle with Namespace
           cat << 'EOF' > app/build.gradle
           apply plugin: 'com.android.application'
 
