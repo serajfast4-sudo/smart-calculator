@@ -38,7 +38,6 @@ jobs:
                    app/src/main/res/mipmap-xhdpi app/src/main/res/mipmap-xxhdpi \
                    app/src/main/res/mipmap-xxxhdpi
 
-          # Find the calculator source: prefer *.html, fall back to a file literally named "Calculator"
           HTML_FILE=$(find . -maxdepth 1 -iname "*.html" -type f | head -n 1)
           if [ -z "$HTML_FILE" ]; then
             HTML_FILE=$(find . -maxdepth 1 -iname "calculator*" -type f | head -n 1)
@@ -52,7 +51,6 @@ jobs:
             echo "Warning: No calculator file found, using default stub."
           fi
 
-          # Generate launcher icon from Icon.svg (if present)
           if [ -f "Icon.svg" ]; then
             rsvg-convert -w 48  -h 48  Icon.svg -o app/src/main/res/mipmap-mdpi/ic_launcher.png
             rsvg-convert -w 72  -h 72  Icon.svg -o app/src/main/res/mipmap-hdpi/ic_launcher.png
@@ -94,6 +92,7 @@ jobs:
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.INTERNET" />
               <application
+                  android:hardwareAccelerated="true"
                   android:icon="@mipmap/ic_launcher"
                   android:allowBackup="true"
                   android:label="Smart Calculator"
@@ -137,7 +136,7 @@ jobs:
 
               defaultConfig {
                   applicationId "com.smartcalculator.app"
-                  minSdk 21
+                  minSdk 24
                   targetSdk 34
                   versionCode 1
                   versionName "1.0"
