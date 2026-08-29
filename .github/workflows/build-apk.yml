@@ -32,12 +32,22 @@ jobs:
       - name: Install Cordova
         run: npm install -g cordova
 
-      - name: Create Cordova App & Build APK
+      - name: Build Embedded APK
         run: |
+          # 1. Create fresh project
           cordova create build_tmp com.smartcalculator.app SmartCalculator
           cd build_tmp
+          
+          # 2. Clear default template files
           rm -rf www/*
+          
+          # 3. Copy repo contents directly into www
           cp -r ../* www/ 2>/dev/null || true
+          
+          # 4. Enforce proper offline local file loading in config.xml
+          sed -i 's|<content src="index.html" />|<content src="index.html" /><preference name="allowHrefSameOrigin" value="*"/><preference name="AndroidInsecureFileModeEnabled" value="true"/>|g' config.xml
+          
+          # 5. Build Android platform locally
           cordova platform add android
           cordova build android --no-telemetry
 
