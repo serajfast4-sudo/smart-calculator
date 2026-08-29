@@ -29,18 +29,39 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Cordova
-        run: npm install -g cordova
+      - name: Install Dependencies
+        run: |
+          npm install -g cordova
+          sudo apt-get update
+          sudo apt-get install -y librsvg2-bin
 
-      - name: Create App & Inject HTML
+      - name: Create App & Inject Code + Icon
         run: |
           cordova create build_tmp com.smartcalculator.app SmartCalculator
           cd build_tmp
           
-          # Remove default files
+          # Clean default template files
           rm -rf www/*
 
-          # Inject the calculator HTML code directly into assets
+          # 1. Convert icon.svg to icon.png (512x512) for Android launcher
+          if [ -f ../icon.svg ]; then
+            rsvg-convert -w 512 -h 512 ../icon.svg -o www/icon.png
+          else
+            # Fallback inline SVG if icon.svg is missing in root
+            cat << 'EOF' > icon_tmp.svg
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <rect x="32" y="32" width="448" height="448" rx="100" fill="#0f172a"/>
+              <rect x="80" y="88" width="352" height="72" rx="16" fill="#020617"/>
+              <rect x="80" y="192" width="100" height="100" rx="20" fill="#334155"/>
+              <text x="130" y="258" font-size="44" fill="#f8fafc" text-anchor="middle">√</text>
+              <rect x="206" y="318" width="226" height="100" rx="20" fill="#16a34a"/>
+              <text x="319" y="386" font-size="64" fill="#ffffff" text-anchor="middle">=</text>
+            </svg>
+            EOF
+            rsvg-convert -w 512 -h 512 icon_tmp.svg -o www/icon.png
+          fi
+
+          # 2. Inject Calculator HTML
           cat << 'EOF' > www/index.html
           <!DOCTYPE html>
           <html lang="en">
@@ -142,7 +163,10 @@ jobs:
           </html>
           EOF
 
-          # Build native APK
+          # 3. Configure Cordova to load icon.png as app launcher icon
+          sed -i 's|</widget>|<icon src="www/icon.png" /></widget>|g' config.xml
+
+          # 4. Build native APK
           cordova platform add android
           cordova build android --no-telemetry
 
