@@ -29,28 +29,27 @@ jobs:
 
       - name: Generate Project Files and Build APK
         run: |
-          # 1. Create required project directories
           mkdir -p app/src/main/java/com/smartcalculator/app
           mkdir -p app/src/main/assets
 
-          # 2. Automatically find and map your .html file
-          HTML_FILE=$(find . -maxdepth 1 -name "*.html" | head -n 1)
+          # Find the calculator source: prefer *.html, fall back to a file literally named "Calculator"
+          HTML_FILE=$(find . -maxdepth 1 -iname "*.html" -type f | head -n 1)
+          if [ -z "$HTML_FILE" ]; then
+            HTML_FILE=$(find . -maxdepth 1 -iname "calculator*" -type f | head -n 1)
+          fi
+
           if [ -n "$HTML_FILE" ]; then
             cp "$HTML_FILE" app/src/main/assets/index.html
             echo "Successfully mapped HTML source: $HTML_FILE"
           else
             echo "<html><body><h1>Calculator App</h1></body></html>" > app/src/main/assets/index.html
-            echo "Warning: No .html file found, using default stub."
+            echo "Warning: No calculator file found, using default stub."
           fi
 
-          # 3. Map App Icon (Optional)
-          ICON_FILE=$(find . -maxdepth 1 -iname "icon.svg" | head -n 1)
-          if [ -n "$ICON_FILE" ]; then
-            mkdir -p app/src/main/res/drawable
-            cp "$ICON_FILE" app/src/main/res/drawable/icon.svg
-          fi
+          # NOTE: skipping icon.svg on purpose — Android can't compile a raw SVG as a
+          # drawable resource, and it was breaking the build on every run. We'll add a
+          # proper launcher icon (PNG or VectorDrawable XML) later.
 
-          # 4. Write MainActivity.java with local WebView permissions
           cat << 'EOF' > app/src/main/java/com/smartcalculator/app/MainActivity.java
           package com.smartcalculator.app;
 
@@ -77,7 +76,6 @@ jobs:
           }
           EOF
 
-          # 5. Write AndroidManifest.xml (AGP 8+ compliant)
           cat << 'EOF' > app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.INTERNET" />
@@ -97,7 +95,6 @@ jobs:
           </manifest>
           EOF
 
-          # 6. Write Root build.gradle
           cat << 'EOF' > build.gradle
           buildscript {
               repositories {
@@ -116,7 +113,6 @@ jobs:
           }
           EOF
 
-          # 7. Write App-level build.gradle
           cat << 'EOF' > app/build.gradle
           apply plugin: 'com.android.application'
 
@@ -140,18 +136,15 @@ jobs:
           }
           EOF
 
-          # 8. Write settings.gradle
           cat << 'EOF' > settings.gradle
           include ':app'
           EOF
 
-          # 9. Download and use standalone Gradle 8.4 binary
           echo "Downloading Gradle 8.4..."
           wget -q https://services.gradle.org/distributions/gradle-8.4-bin.zip
           unzip -q gradle-8.4-bin.zip
           export PATH="$PWD/gradle-8.4/bin:$PATH"
 
-          # 10. Compile APK
           echo "Executing Gradle build..."
           gradle assembleDebug
 
