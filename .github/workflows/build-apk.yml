@@ -24,13 +24,17 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Create Webview Project & Pin Gradle 8.4
+      - name: Generate Project Files & Download Wrapper Shell
         run: |
           mkdir -p app/src/main/java/com/smartcalculator/app
           mkdir -p app/src/main/assets
           mkdir -p gradle/wrapper
 
-          # 1. Manually write wrapper properties (No system Gradle execution needed)
+          # 1. Download official gradlew shell wrapper executable directly
+          curl -sSL https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradlew -o gradlew
+          chmod +x gradlew
+
+          # 2. Write wrapper properties configured to Gradle 8.4
           cat << 'EOF' > gradle/wrapper/gradle-wrapper.properties
           distributionBase=GRADLE_USER_HOME
           distributionPath=wrapper/dists
@@ -41,7 +45,7 @@ jobs:
           zipStorePath=wrapper/dists
           EOF
 
-          # 2. Map HTML source file
+          # 3. Map HTML source file
           if [ -f index.html ]; then
             cp index.html app/src/main/assets/index.html
           elif [ -f Calculator.html ]; then
@@ -52,14 +56,14 @@ jobs:
             echo "<html><body><h1>Calculator App</h1></body></html>" > app/src/main/assets/index.html
           fi
 
-          # 3. Map App Icon
+          # 4. Map App Icon
           ICON_FILE=$(find . -maxdepth 1 -iname "icon.svg" | head -n 1)
           if [ -n "$ICON_FILE" ]; then
             mkdir -p app/src/main/res/drawable
             cp "$ICON_FILE" app/src/main/res/drawable/icon.svg
           fi
 
-          # 4. MainActivity.java
+          # 5. MainActivity.java
           cat << 'EOF' > app/src/main/java/com/smartcalculator/app/MainActivity.java
           package com.smartcalculator.app;
 
@@ -84,7 +88,7 @@ jobs:
           }
           EOF
 
-          # 5. AndroidManifest.xml
+          # 6. AndroidManifest.xml
           cat << 'EOF' > app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android"
               package="com.smartcalculator.app">
@@ -105,7 +109,7 @@ jobs:
           </manifest>
           EOF
 
-          # 6. Root build.gradle
+          # 7. Root build.gradle
           cat << 'EOF' > build.gradle
           buildscript {
               repositories {
@@ -124,7 +128,7 @@ jobs:
           }
           EOF
 
-          # 7. App build.gradle
+          # 8. App build.gradle
           cat << 'EOF' > app/build.gradle
           apply plugin: 'com.android.application'
 
@@ -148,13 +152,13 @@ jobs:
           }
           EOF
 
-          # 8. Settings.gradle
+          # 9. Settings.gradle
           cat << 'EOF' > settings.gradle
           include ':app'
           EOF
 
-      - name: Build Debug APK directly with Gradle
-        run: gradle assembleDebug
+      - name: Build Debug APK via Wrapper Executable
+        run: ./gradlew assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
