@@ -18,41 +18,21 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
-      - name: Setup Java JDK
+      - name: Setup Java JDK 17
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Cordova
-        run: npm install -g cordova
+      - name: Install Bubblewrap CLI
+        run: npm install -g @bubblewrap/cli
 
-      - name: Create App & Prepare Assets
+      - name: Package Web App into APK
         run: |
-          cordova create build_tmp com.smartcalculator.app SmartCalculator
-          cd build_tmp
-          rm -rf www/*
-
-          # 1. Generate icon directly as SVG inside www
-          if [ -f ../icon.svg ]; then
-            cp ../icon.svg www/icon.svg
-          else
-            cat << 'EOF' > www/icon.svg
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              <rect x="32" y="32" width="448" height="448" rx="100" fill="#0f172a"/>
-              <rect x="80" y="88" width="352" height="72" rx="16" fill="#020617"/>
-              <rect x="80" y="192" width="100" height="100" rx="20" fill="#334155"/>
-              <text x="130" y="258" font-size="44" fill="#f8fafc" text-anchor="middle">√</text>
-              <rect x="206" y="318" width="226" height="100" rx="20" fill="#16a34a"/>
-              <text x="319" y="386" font-size="64" fill="#ffffff" text-anchor="middle">=</text>
-            </svg>
-            EOF
-          fi
-
-          # 2. Inject Calculator HTML
-          cat << 'EOF' > www/index.html
+          mkdir -p android_app
+          cat << 'EOF' > android_app/index.html
           <!DOCTYPE html>
           <html lang="en">
           <head>
@@ -153,15 +133,44 @@ jobs:
           </html>
           EOF
 
-          # Configure Icon
-          sed -i 's|</widget>|<icon src="www/icon.svg" /></widget>|g' config.xml
+          cat << 'EOF' > android_app/manifest.json
+          {
+            "name": "Smart Calculator",
+            "short_name": "Calculator",
+            "start_url": "index.html",
+            "display": "standalone",
+            "background_color": "#0f172a",
+            "theme_color": "#0f172a",
+            "icons": [
+              {
+                "src": "icon.svg",
+                "sizes": "512x512",
+                "type": "image/svg+xml",
+                "purpose": "any maskable"
+              }
+            ]
+          }
+          EOF
 
-          # Add Android Platform & Build
-          cordova platform add android
-          cordova build android --no-telemetry
+          if [ -f icon.svg ]; then
+            cp icon.svg android_app/icon.svg
+          else
+            cat << 'EOF' > android_app/icon.svg
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <rect x="32" y="32" width="448" height="448" rx="100" fill="#0f172a"/>
+              <rect x="80" y="88" width="352" height="72" rx="16" fill="#020617"/>
+              <rect x="80" y="192" width="100" height="100" rx="20" fill="#334155"/>
+              <text x="130" y="258" font-size="44" fill="#f8fafc" text-anchor="middle">√</text>
+              <rect x="206" y="318" width="226" height="100" rx="20" fill="#16a34a"/>
+              <text x="319" y="386" font-size="64" fill="#ffffff" text-anchor="middle">=</text>
+            </svg>
+            EOF
+          fi
+
+          npx @pwabuilder/cli android_app -o output_apk --manifestLocation android_app/manifest.json
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: SmartCalculator-APK
-          path: build_tmp/platforms/android/app/build/outputs/apk/debug/app-debug.apk
+          path: output_apk/*.apk
