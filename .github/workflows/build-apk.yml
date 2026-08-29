@@ -15,162 +15,54 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
       - name: Setup Java JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Bubblewrap CLI
-        run: npm install -g @bubblewrap/cli
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
-      - name: Package Web App into APK
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Cordova CLI
+        run: npm install -g cordova
+
+      - name: Create Cordova App Environment
         run: |
-          mkdir -p android_app
-          cat << 'EOF' > android_app/index.html
-          <!DOCTYPE html>
-          <html lang="en">
-          <head>
-              <meta charset="UTF-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-              <title>Calculator</title>
-              <style>
-                  :root { --bg: #0f172a; --screen: #020617; --num: #334155; --op: #2563eb; --sci: #1e293b; --action: #dc2626; --text: #f8fafc; --muted: #94a3b8; --accent: #38bdf8; }
-                  * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; -webkit-tap-highlight-color: transparent; }
-                  body { background-color: var(--bg); color: var(--text); height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
-                  .calc-app { width: 100vw; height: 100vh; max-width: 480px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
-                  .screen { background-color: var(--screen); border-radius: 16px; padding: 16px; border: 1px solid #334155; display: flex; flex-direction: column; justify-content: flex-end; height: 120px; }
-                  .expr { color: var(--muted); font-size: 1rem; text-align: right; min-height: 1.2rem; }
-                  .output { color: var(--text); font-size: 2.4rem; font-weight: bold; text-align: right; overflow-x: auto; white-space: nowrap; }
-                  .keypad { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; flex: 1; }
-                  button { border: none; font-size: 1.1rem; font-weight: 600; border-radius: 10px; color: var(--text); display: flex; align-items: center; justify-content: center; user-select: none; touch-action: manipulation; }
-                  button:active { opacity: 0.6; transform: scale(0.96); }
-                  .b-num { background-color: var(--num); }
-                  .b-op { background-color: var(--op); }
-                  .b-sci { background-color: var(--sci); color: var(--accent); font-size: 0.95rem; }
-                  .b-clear { background-color: var(--action); }
-                  .b-eq { background-color: #16a34a; grid-column: span 2; }
-              </style>
-          </head>
-          <body>
-          <div class="calc-app">
-              <div class="screen">
-                  <div class="expr" id="expr"></div>
-                  <div class="output" id="out">0</div>
-              </div>
-              <div class="keypad">
-                  <button class="b-sci" onclick="addFn('sin')">sin</button>
-                  <button class="b-sci" onclick="addFn('cos')">cos</button>
-                  <button class="b-sci" onclick="addFn('tan')">tan</button>
-                  <button class="b-clear" onclick="clearAll()">AC</button>
-                  <button class="b-clear" onclick="del()">DEL</button>
-                  <button class="b-sci" onclick="addFn('asin')">asin</button>
-                  <button class="b-sci" onclick="addFn('acos')">acos</button>
-                  <button class="b-sci" onclick="addFn('atan')">atan</button>
-                  <button class="b-sci" onclick="add('(')">(</button>
-                  <button class="b-sci" onclick="add(')')">)</button>
-                  <button class="b-sci" onclick="addFn('log')">log</button>
-                  <button class="b-sci" onclick="addFn('ln')">ln</button>
-                  <button class="b-sci" onclick="addFn('sqrt')">√</button>
-                  <button class="b-sci" onclick="add('^')">x^y</button>
-                  <button class="b-op" onclick="add('/')">÷</button>
-                  <button class="b-num" onclick="add('7')">7</button>
-                  <button class="b-num" onclick="add('8')">8</button>
-                  <button class="b-num" onclick="add('9')">9</button>
-                  <button class="b-sci" onclick="add('%')">%</button>
-                  <button class="b-op" onclick="add('*')">×</button>
-                  <button class="b-num" onclick="add('4')">4</button>
-                  <button class="b-num" onclick="add('5')">5</button>
-                  <button class="b-num" onclick="add('6')">6</button>
-                  <button class="b-sci" onclick="addConst('pi')">π</button>
-                  <button class="b-op" onclick="add('-')">-</button>
-                  <button class="b-num" onclick="add('1')">1</button>
-                  <button class="b-num" onclick="add('2')">2</button>
-                  <button class="b-num" onclick="add('3')">3</button>
-                  <button class="b-sci" onclick="addConst('e')">e</button>
-                  <button class="b-op" onclick="add('+')">+</button>
-                  <button class="b-num" onclick="add('0')">0</button>
-                  <button class="b-num" onclick="add('.')">.</button>
-                  <button class="b-sci" onclick="add('!')">x!</button>
-                  <button class="b-eq" onclick="calc()">=</button>
-              </div>
-          </div>
-          <script>
-              let current = '', exprText = '', reset = false;
-              const outEl = document.getElementById('out'), exprEl = document.getElementById('expr');
-              function add(val) { if (reset) { current = ''; reset = false; } current += val; render(); }
-              function addFn(fn) { if (reset) reset = false; current += fn + '('; render(); }
-              function addConst(c) { if (reset) { current = ''; reset = false; } current += c === 'pi' ? 'Math.PI' : 'Math.E'; render(); }
-              function clearAll() { current = ''; exprText = ''; render(); }
-              function del() { if (!reset) { current = current.slice(0, -1); render(); } }
-              function render() { outEl.textContent = current.replace(/Math\.PI/g, 'π').replace(/Math\.E/g, 'e').replace(/\*/g, '×').replace(/\//g, '÷') || '0'; exprEl.textContent = exprText; }
-              function factorial(n) { if (n < 0) return NaN; if (n <= 1) return 1; let r = 1; for (let i = 2; i <= n; i++) r *= i; return r; }
-              function parseMath(str) {
-                  let p = str.replace(/sin\(/g, 'Math.sin(').replace(/cos\(/g, 'Math.cos(').replace(/tan\(/g, 'Math.tan(').replace(/asin\(/g, 'Math.asin(').replace(/acos\(/g, 'Math.acos(').replace(/atan\(/g, 'Math.atan(').replace(/log\(/g, 'Math.log10(').replace(/ln\(/g, 'Math.log(').replace(/sqrt\(/g, 'Math.sqrt(').replace(/\^/g, '**').replace(/(\d+)%/g, '($1/100)');
-                  return p.replace(/(\d+)!/g, (_, n) => factorial(parseInt(n)));
-              }
-              function calc() {
-                  if (!current) return;
-                  try {
-                      exprText = current.replace(/Math\.PI/g, 'π').replace(/Math\.E/g, 'e');
-                      let res = eval(parseMath(current));
-                      if (typeof res === 'number' && !isNaN(res)) {
-                          res = Number(res.toFixed(8));
-                          current = res.toString();
-                          outEl.textContent = res;
-                          exprEl.textContent = exprText + ' =';
-                          reset = true;
-                      } else { outEl.textContent = 'Error'; }
-                  } catch { outEl.textContent = 'Error'; }
-              }
-          </script>
-          </body>
-          </html>
-          EOF
+          # 1. Initialize Cordova project
+          cordova create build_tmp com.smartcalculator.app SmartCalculator
+          cd build_tmp
+          rm -rf www/*
 
-          cat << 'EOF' > android_app/manifest.json
-          {
-            "name": "Smart Calculator",
-            "short_name": "Calculator",
-            "start_url": "index.html",
-            "display": "standalone",
-            "background_color": "#0f172a",
-            "theme_color": "#0f172a",
-            "icons": [
-              {
-                "src": "icon.svg",
-                "sizes": "512x512",
-                "type": "image/svg+xml",
-                "purpose": "any maskable"
-              }
-            ]
-          }
-          EOF
-
-          if [ -f icon.svg ]; then
-            cp icon.svg android_app/icon.svg
+          # 2. Locate and copy HTML file (handles 'Calculator', 'Calculator.html', or 'index.html')
+          if [ -f ../index.html ]; then
+            cp ../index.html www/index.html
+          elif [ -f ../Calculator.html ]; then
+            cp ../Calculator.html www/index.html
+          elif [ -f ../Calculator ]; then
+            cp ../Calculator www/index.html
           else
-            cat << 'EOF' > android_app/icon.svg
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-              <rect x="32" y="32" width="448" height="448" rx="100" fill="#0f172a"/>
-              <rect x="80" y="88" width="352" height="72" rx="16" fill="#020617"/>
-              <rect x="80" y="192" width="100" height="100" rx="20" fill="#334155"/>
-              <text x="130" y="258" font-size="44" fill="#f8fafc" text-anchor="middle">√</text>
-              <rect x="206" y="318" width="226" height="100" rx="20" fill="#16a34a"/>
-              <text x="319" y="386" font-size="64" fill="#ffffff" text-anchor="middle">=</text>
-            </svg>
-            EOF
+            echo "<html><body><h1>Calculator App</h1></body></html>" > www/index.html
           fi
 
-          npx @pwabuilder/cli android_app -o output_apk --manifestLocation android_app/manifest.json
+          # 3. Locate and handle SVG icon (case-insensitive search)
+          ICON_FILE=$(find .. -maxdepth 1 -iname "icon.svg" | head -n 1)
+          if [ -n "$ICON_FILE" ]; then
+            cp "$ICON_FILE" www/icon.svg
+            sed -i 's|</widget>|<icon src="www/icon.svg" /></widget>|g' config.xml
+          fi
+
+          # 4. Add Android platform & build debug APK directly via Gradle
+          cordova platform add android@12.0.0
+          cordova build android --debug --no-telemetry
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: SmartCalculator-APK
-          path: output_apk/*.apk
+          path: build_tmp/platforms/android/app/build/outputs/apk/debug/app-debug.apk
