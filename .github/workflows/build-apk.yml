@@ -24,12 +24,7 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Setup Gradle 8.4
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: '8.4'
-
-      - name: Create Native Webview App
+      - name: Create Native Webview App and Project Structure
         run: |
           mkdir -p app/src/main/java/com/smartcalculator/app
           mkdir -p app/src/main/assets
@@ -146,8 +141,10 @@ jobs:
           include ':app'
           EOF
 
-      - name: Build Debug APK via Installed Gradle
-        run: gradle assembleDebug
+      - name: Generate Wrapper & Build APK
+        run: |
+          gradle wrapper --gradle-version 8.4
+          ./gradlew assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
