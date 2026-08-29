@@ -24,15 +24,16 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Provision Gradle 8.4 Environment
+      - name: Setup Gradle 8.4 Environment
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.4'
 
-      - name: Create Webview Project Files
+      - name: Create Webview Project Files & Wrapper
         run: |
           mkdir -p app/src/main/java/com/smartcalculator/app
           mkdir -p app/src/main/assets
+          mkdir -p gradle/wrapper
 
           # 1. Map HTML source file
           if [ -f index.html ]; then
@@ -146,8 +147,11 @@ jobs:
           include ':app'
           EOF
 
-      - name: Build Debug APK
-        run: gradle assembleDebug
+          # 8. Generate native gradle wrapper files safely using the installed gradle 8.4 binary
+          gradle wrapper --gradle-version 8.4
+
+      - name: Build Debug APK via Wrapper
+        run: ./gradlew assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
