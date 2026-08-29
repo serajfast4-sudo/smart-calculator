@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Accent Gradient -->
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+
+    <!-- Equals Button Glow Gradient -->
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e" />
+      <stop offset="100%" stop-color="#16a34a" />
+    </linearGradient>
+
+    <!-- Subtle Drop Shadow -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+  </defs>
+
+  <!-- Base Icon Shape (Squircle for Modern Android Style) -->
+  <rect x="32" y="32" width="448" height="448" rx="100" fill="url(#bgGrad)" filter="url(#shadow)" />
+
+  <!-- Inner Border Highlight -->
+  <rect x="34" y="34" width="444" height="444" rx="98" fill="none" stroke="#334155" stroke-width="4" opacity="0.6" />
+
+  <!-- Display Bar Graphic -->
+  <rect x="80" y="88" width="352" height="72" rx="16" fill="#020617" stroke="#334155" stroke-width="3" />
+  <circle cx="112" cy="124" r="8" fill="#38bdf8" />
+  <rect x="260" y="116" width="144" height="16" rx="8" fill="#38bdf8" opacity="0.8" />
+
+  <!-- Keypad Button Elements -->
+  <!-- Top Left Key -->
+  <rect x="80" y="192" width="100" height="100" rx="20" fill="#334155" />
+  <text x="130" y="258" font-family="sans-serif" font-size="44" font-weight="bold" fill="#f8fafc" text-anchor="middle">√</text>
+
+  <!-- Top Right Key -->
+  <rect x="206" y="192" width="100" height="100" rx="20" fill="#334155" />
+  <text x="256" y="254" font-family="sans-serif" font-size="36" font-weight="bold" fill="#38bdf8" text-anchor="middle">f(x)</text>
+
+  <!-- Operator Key -->
+  <rect x="332" y="192" width="100" height="100" rx="20" fill="url(#accentGrad)" />
+  <text x="382" y="258" font-family="sans-serif" font-size="52" font-weight="bold" fill="#ffffff" text-anchor="middle">÷</text>
+
+  <!-- Bottom Left Key -->
+  <rect x="80" y="318" width="100" height="100" rx="20" fill="#334155" />
+  <text x="130" y="384" font-family="sans-serif" font-size="52" font-weight="bold" fill="#ffffff" text-anchor="middle">×</text>
+
+  <!-- Equals Accent Key -->
+  <rect x="206" y="318" width="226" height="100" rx="20" fill="url(#greenGrad)" />
+  <text x="319" y="386" font-family="sans-serif" font-size="64" font-weight="bold" fill="#ffffff" text-anchor="middle">=</text>
+</svg>
