@@ -1,4 +1,4 @@
-name: Build Android APK
+ name: Build Android APK
 
 on:
   push:
@@ -32,22 +32,117 @@ jobs:
       - name: Install Cordova
         run: npm install -g cordova
 
-      - name: Build Embedded APK
+      - name: Create App & Inject HTML
         run: |
-          # 1. Create fresh project
           cordova create build_tmp com.smartcalculator.app SmartCalculator
           cd build_tmp
           
-          # 2. Clear default template files
+          # Remove default files
           rm -rf www/*
-          
-          # 3. Copy repo contents directly into www
-          cp -r ../* www/ 2>/dev/null || true
-          
-          # 4. Enforce proper offline local file loading in config.xml
-          sed -i 's|<content src="index.html" />|<content src="index.html" /><preference name="allowHrefSameOrigin" value="*"/><preference name="AndroidInsecureFileModeEnabled" value="true"/>|g' config.xml
-          
-          # 5. Build Android platform locally
+
+          # Inject the calculator HTML code directly into assets
+          cat << 'EOF' > www/index.html
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+              <title>Calculator</title>
+              <style>
+                  :root { --bg: #0f172a; --screen: #020617; --num: #334155; --op: #2563eb; --sci: #1e293b; --action: #dc2626; --text: #f8fafc; --muted: #94a3b8; --accent: #38bdf8; }
+                  * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; -webkit-tap-highlight-color: transparent; }
+                  body { background-color: var(--bg); color: var(--text); height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+                  .calc-app { width: 100vw; height: 100vh; max-width: 480px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+                  .screen { background-color: var(--screen); border-radius: 16px; padding: 16px; border: 1px solid #334155; display: flex; flex-direction: column; justify-content: flex-end; height: 120px; }
+                  .expr { color: var(--muted); font-size: 1rem; text-align: right; min-height: 1.2rem; }
+                  .output { color: var(--text); font-size: 2.4rem; font-weight: bold; text-align: right; overflow-x: auto; white-space: nowrap; }
+                  .keypad { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; flex: 1; }
+                  button { border: none; font-size: 1.1rem; font-weight: 600; border-radius: 10px; color: var(--text); display: flex; align-items: center; justify-content: center; user-select: none; touch-action: manipulation; }
+                  button:active { opacity: 0.6; transform: scale(0.96); }
+                  .b-num { background-color: var(--num); }
+                  .b-op { background-color: var(--op); }
+                  .b-sci { background-color: var(--sci); color: var(--accent); font-size: 0.95rem; }
+                  .b-clear { background-color: var(--action); }
+                  .b-eq { background-color: #16a34a; grid-column: span 2; }
+              </style>
+          </head>
+          <body>
+          <div class="calc-app">
+              <div class="screen">
+                  <div class="expr" id="expr"></div>
+                  <div class="output" id="out">0</div>
+              </div>
+              <div class="keypad">
+                  <button class="b-sci" onclick="addFn('sin')">sin</button>
+                  <button class="b-sci" onclick="addFn('cos')">cos</button>
+                  <button class="b-sci" onclick="addFn('tan')">tan</button>
+                  <button class="b-clear" onclick="clearAll()">AC</button>
+                  <button class="b-clear" onclick="del()">DEL</button>
+                  <button class="b-sci" onclick="addFn('asin')">asin</button>
+                  <button class="b-sci" onclick="addFn('acos')">acos</button>
+                  <button class="b-sci" onclick="addFn('atan')">atan</button>
+                  <button class="b-sci" onclick="add('(')">(</button>
+                  <button class="b-sci" onclick="add(')')">)</button>
+                  <button class="b-sci" onclick="addFn('log')">log</button>
+                  <button class="b-sci" onclick="addFn('ln')">ln</button>
+                  <button class="b-sci" onclick="addFn('sqrt')">√</button>
+                  <button class="b-sci" onclick="add('^')">x^y</button>
+                  <button class="b-op" onclick="add('/')">÷</button>
+                  <button class="b-num" onclick="add('7')">7</button>
+                  <button class="b-num" onclick="add('8')">8</button>
+                  <button class="b-num" onclick="add('9')">9</button>
+                  <button class="b-sci" onclick="add('%')">%</button>
+                  <button class="b-op" onclick="add('*')">×</button>
+                  <button class="b-num" onclick="add('4')">4</button>
+                  <button class="b-num" onclick="add('5')">5</button>
+                  <button class="b-num" onclick="add('6')">6</button>
+                  <button class="b-sci" onclick="addConst('pi')">π</button>
+                  <button class="b-op" onclick="add('-')">-</button>
+                  <button class="b-num" onclick="add('1')">1</button>
+                  <button class="b-num" onclick="add('2')">2</button>
+                  <button class="b-num" onclick="add('3')">3</button>
+                  <button class="b-sci" onclick="addConst('e')">e</button>
+                  <button class="b-op" onclick="add('+')">+</button>
+                  <button class="b-num" onclick="add('0')">0</button>
+                  <button class="b-num" onclick="add('.')">.</button>
+                  <button class="b-sci" onclick="add('!')">x!</button>
+                  <button class="b-eq" onclick="calc()">=</button>
+              </div>
+          </div>
+          <script>
+              let current = '', exprText = '', reset = false;
+              const outEl = document.getElementById('out'), exprEl = document.getElementById('expr');
+              function add(val) { if (reset) { current = ''; reset = false; } current += val; render(); }
+              function addFn(fn) { if (reset) reset = false; current += fn + '('; render(); }
+              function addConst(c) { if (reset) { current = ''; reset = false; } current += c === 'pi' ? 'Math.PI' : 'Math.E'; render(); }
+              function clearAll() { current = ''; exprText = ''; render(); }
+              function del() { if (!reset) { current = current.slice(0, -1); render(); } }
+              function render() { outEl.textContent = current.replace(/Math\.PI/g, 'π').replace(/Math\.E/g, 'e').replace(/\*/g, '×').replace(/\//g, '÷') || '0'; exprEl.textContent = exprText; }
+              function factorial(n) { if (n < 0) return NaN; if (n <= 1) return 1; let r = 1; for (let i = 2; i <= n; i++) r *= i; return r; }
+              function parseMath(str) {
+                  let p = str.replace(/sin\(/g, 'Math.sin(').replace(/cos\(/g, 'Math.cos(').replace(/tan\(/g, 'Math.tan(').replace(/asin\(/g, 'Math.asin(').replace(/acos\(/g, 'Math.acos(').replace(/atan\(/g, 'Math.atan(').replace(/log\(/g, 'Math.log10(').replace(/ln\(/g, 'Math.log(').replace(/sqrt\(/g, 'Math.sqrt(').replace(/\^/g, '**').replace(/(\d+)%/g, '($1/100)');
+                  return p.replace(/(\d+)!/g, (_, n) => factorial(parseInt(n)));
+              }
+              function calc() {
+                  if (!current) return;
+                  try {
+                      exprText = current.replace(/Math\.PI/g, 'π').replace(/Math\.E/g, 'e');
+                      let res = eval(parseMath(current));
+                      if (typeof res === 'number' && !isNaN(res)) {
+                          res = Number(res.toFixed(8));
+                          current = res.toString();
+                          outEl.textContent = res;
+                          exprEl.textContent = exprText + ' =';
+                          reset = true;
+                      } else { outEl.textContent = 'Error'; }
+                  } catch { outEl.textContent = 'Error'; }
+              }
+          </script>
+          </body>
+          </html>
+          EOF
+
+          # Build native APK
           cordova platform add android
           cordova build android --no-telemetry
 
