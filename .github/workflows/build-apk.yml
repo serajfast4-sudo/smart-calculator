@@ -27,10 +27,16 @@ jobs:
           accept-android-sdk-licenses: true
           packages: 'platforms;android-34 build-tools;34.0.0 platform-tools'
 
+      - name: Install SVG converter
+        run: sudo apt-get install -y librsvg2-bin
+
       - name: Generate Project Files and Build APK
         run: |
           mkdir -p app/src/main/java/com/smartcalculator/app
           mkdir -p app/src/main/assets
+          mkdir -p app/src/main/res/mipmap-mdpi app/src/main/res/mipmap-hdpi \
+                   app/src/main/res/mipmap-xhdpi app/src/main/res/mipmap-xxhdpi \
+                   app/src/main/res/mipmap-xxxhdpi
 
           # Find the calculator source: prefer *.html, fall back to a file literally named "Calculator"
           HTML_FILE=$(find . -maxdepth 1 -iname "*.html" -type f | head -n 1)
@@ -46,9 +52,17 @@ jobs:
             echo "Warning: No calculator file found, using default stub."
           fi
 
-          # NOTE: skipping icon.svg on purpose — Android can't compile a raw SVG as a
-          # drawable resource, and it was breaking the build on every run. We'll add a
-          # proper launcher icon (PNG or VectorDrawable XML) later.
+          # Generate launcher icon from Icon.svg (if present)
+          if [ -f "Icon.svg" ]; then
+            rsvg-convert -w 48  -h 48  Icon.svg -o app/src/main/res/mipmap-mdpi/ic_launcher.png
+            rsvg-convert -w 72  -h 72  Icon.svg -o app/src/main/res/mipmap-hdpi/ic_launcher.png
+            rsvg-convert -w 96  -h 96  Icon.svg -o app/src/main/res/mipmap-xhdpi/ic_launcher.png
+            rsvg-convert -w 144 -h 144 Icon.svg -o app/src/main/res/mipmap-xxhdpi/ic_launcher.png
+            rsvg-convert -w 192 -h 192 Icon.svg -o app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+            echo "Icon generated from Icon.svg"
+          else
+            echo "No Icon.svg found, using default Android icon"
+          fi
 
           cat << 'EOF' > app/src/main/java/com/smartcalculator/app/MainActivity.java
           package com.smartcalculator.app;
@@ -80,6 +94,7 @@ jobs:
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.INTERNET" />
               <application
+                  android:icon="@mipmap/ic_launcher"
                   android:allowBackup="true"
                   android:label="Smart Calculator"
                   android:supportsRtl="true"
