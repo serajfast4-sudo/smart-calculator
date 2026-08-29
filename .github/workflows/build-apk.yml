@@ -24,14 +24,19 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Bootstrap Pinned Gradle Wrapper
+        run: |
+          # Create temporary empty build file so system Gradle doesn't complain during wrapper setup
+          touch build.gradle
+          gradle wrapper --gradle-version 8.4
+          rm build.gradle
+
       - name: Create Native Webview App
         run: |
-          # 1. Directory Structure
           mkdir -p app/src/main/java/com/smartcalculator/app
           mkdir -p app/src/main/assets
-          mkdir -p gradle/wrapper
 
-          # 2. Map HTML File
+          # Map HTML
           if [ -f index.html ]; then
             cp index.html app/src/main/assets/index.html
           elif [ -f Calculator.html ]; then
@@ -42,7 +47,14 @@ jobs:
             echo "<html><body><h1>Calculator App</h1></body></html>" > app/src/main/assets/index.html
           fi
 
-          # 3. Java Launcher
+          # App Icon
+          ICON_FILE=$(find . -maxdepth 1 -iname "icon.svg" | head -n 1)
+          if [ -n "$ICON_FILE" ]; then
+            mkdir -p app/src/main/res/drawable
+            cp "$ICON_FILE" app/src/main/res/drawable/icon.svg
+          fi
+
+          # MainActivity.java
           cat << 'EOF' > app/src/main/java/com/smartcalculator/app/MainActivity.java
           package com.smartcalculator.app;
 
@@ -67,7 +79,7 @@ jobs:
           }
           EOF
 
-          # 4. Android Manifest
+          # AndroidManifest.xml
           cat << 'EOF' > app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android"
               package="com.smartcalculator.app">
@@ -88,7 +100,7 @@ jobs:
           </manifest>
           EOF
 
-          # 5. Root build.gradle
+          # Root build.gradle
           cat << 'EOF' > build.gradle
           buildscript {
               repositories {
@@ -107,7 +119,7 @@ jobs:
           }
           EOF
 
-          # 6. App build.gradle
+          # App build.gradle
           cat << 'EOF' > app/build.gradle
           apply plugin: 'com.android.application'
 
@@ -131,24 +143,10 @@ jobs:
           }
           EOF
 
-          # 7. Settings.gradle
+          # Settings.gradle
           cat << 'EOF' > settings.gradle
           include ':app'
           EOF
-
-          # 8. Pin Gradle Wrapper to 8.4 (prevents Gradle 9.x incompatibility)
-          cat << 'EOF' > gradle/wrapper/gradle-wrapper.properties
-          distributionBase=GRADLE_USER_HOME
-          distributionPath=wrapper/dists
-          distributionUrl=https\://services.gradle.org/distributions/gradle-8.4-bin.zip
-          networkTimeout=10000
-          validateDistributionUrl=true
-          zipStoreBase=GRADLE_USER_HOME
-          zipStorePath=wrapper/dists
-          EOF
-
-      - name: Setup Gradle Wrapper Executable
-        run: gradle wrapper --gradle-version 8.4
 
       - name: Build Debug APK via Pinned Gradle
         run: ./gradlew assembleDebug
