@@ -29,11 +29,10 @@ jobs:
         with:
           gradle-version: '8.4'
 
-      - name: Create Webview Project Files & Wrapper
+      - name: Create Webview Project Files
         run: |
           mkdir -p app/src/main/java/com/smartcalculator/app
           mkdir -p app/src/main/assets
-          mkdir -p gradle/wrapper
 
           # 1. Map HTML source file
           if [ -f index.html ]; then
@@ -147,11 +146,8 @@ jobs:
           include ':app'
           EOF
 
-          # 8. Generate native gradle wrapper files safely using the installed gradle 8.4 binary
-          gradle wrapper --gradle-version 8.4
-
-      - name: Build Debug APK via Wrapper
-        run: ./gradlew assembleDebug
+      - name: Build Debug APK Directly
+        run: gradle assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
