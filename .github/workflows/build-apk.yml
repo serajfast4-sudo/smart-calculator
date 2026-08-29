@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Java JDK 17
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -24,14 +24,14 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Create Webview Android Project
+      - name: Create Native Webview App
         run: |
-          # 1. Create native Android App directory structure
+          # 1. Directory Structure
           mkdir -p app/src/main/java/com/smartcalculator/app
           mkdir -p app/src/main/assets
-          mkdir -p app/src/main/res/drawable
+          mkdir -p gradle/wrapper
 
-          # 2. Copy Web Assets
+          # 2. Map HTML File
           if [ -f index.html ]; then
             cp index.html app/src/main/assets/index.html
           elif [ -f Calculator.html ]; then
@@ -42,13 +42,7 @@ jobs:
             echo "<html><body><h1>Calculator App</h1></body></html>" > app/src/main/assets/index.html
           fi
 
-          # 3. Handle App Icon (case-insensitive search)
-          ICON_FILE=$(find . -maxdepth 1 -iname "icon.svg" | head -n 1)
-          if [ -n "$ICON_FILE" ]; then
-            cp "$ICON_FILE" app/src/main/res/drawable/icon.svg
-          fi
-
-          # 4. Write MainActivity.java (Native Webview launcher)
+          # 3. Java Launcher
           cat << 'EOF' > app/src/main/java/com/smartcalculator/app/MainActivity.java
           package com.smartcalculator.app;
 
@@ -73,11 +67,11 @@ jobs:
           }
           EOF
 
-          # 5. Write AndroidManifest.xml
+          # 4. Android Manifest
           cat << 'EOF' > app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android"
               package="com.smartcalculator.app">
-              <uses-permission android= "android.permission.INTERNET" />
+              <uses-permission android:name="android.permission.INTERNET" />
               <application
                   android:allowBackup="true"
                   android:label="Smart Calculator"
@@ -94,7 +88,7 @@ jobs:
           </manifest>
           EOF
 
-          # 6. Write Root build.gradle
+          # 5. Root build.gradle
           cat << 'EOF' > build.gradle
           buildscript {
               repositories {
@@ -113,7 +107,7 @@ jobs:
           }
           EOF
 
-          # 7. Write App build.gradle
+          # 6. App build.gradle
           cat << 'EOF' > app/build.gradle
           apply plugin: 'com.android.application'
 
@@ -137,13 +131,27 @@ jobs:
           }
           EOF
 
-          # 8. Write settings.gradle
+          # 7. Settings.gradle
           cat << 'EOF' > settings.gradle
           include ':app'
           EOF
 
-      - name: Build Debug APK via Gradle
-        run: gradle assembleDebug
+          # 8. Pin Gradle Wrapper to 8.4 (prevents Gradle 9.x incompatibility)
+          cat << 'EOF' > gradle/wrapper/gradle-wrapper.properties
+          distributionBase=GRADLE_USER_HOME
+          distributionPath=wrapper/dists
+          distributionUrl=https\://services.gradle.org/distributions/gradle-8.4-bin.zip
+          networkTimeout=10000
+          validateDistributionUrl=true
+          zipStoreBase=GRADLE_USER_HOME
+          zipStorePath=wrapper/dists
+          EOF
+
+      - name: Setup Gradle Wrapper Executable
+        run: gradle wrapper --gradle-version 8.4
+
+      - name: Build Debug APK via Pinned Gradle
+        run: ./gradlew assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
