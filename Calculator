@@ -3,53 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0f172a">
-    <title>Full Mobile Calculator</title>
-
-    <link rel="manifest" href='data:application/manifest+json,{
-        "name": "Full Calculator",
-        "short_name": "Calc",
-        "start_url": ".",
-        "display": "standalone",
-        "background_color": "#0f172a",
-        "theme_color": "#0f172a",
-        "icons": [{
-            "src": "https://via.placeholder.com/512.png?text=Calc",
-            "sizes": "512x512",
-            "type": "image/png"
-        }]
-    }'>
-
+    <meta name="theme-color" content="#050508">
+    <title>Smart Calculator</title>
     <style>
         :root {
-            --bg1: #1e1b4b;
-            --bg2: #0f172a;
-            --bg3: #164e63;
-            --glass: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.16);
-            --op: rgba(37, 99, 235, 0.55);
-            --sci: rgba(56, 189, 248, 0.12);
-            --action: rgba(220, 38, 38, 0.55);
-            --eq: rgba(22, 163, 74, 0.6);
-            --text: #f8fafc;
-            --muted: #94a3b8;
-            --accent: #7dd3fc;
+            --glass: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --op: rgba(255, 255, 255, 0.07);
+            --sci: rgba(255, 255, 255, 0.03);
+            --action: rgba(255, 60, 60, 0.22);
+            --eq: rgba(52, 211, 153, 0.2);
+            --text: rgba(255, 255, 255, 0.92);
+            --muted: rgba(255, 255, 255, 0.28);
+            --accent: rgba(255, 255, 255, 0.55);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background:
-                radial-gradient(circle at 15% 20%, rgba(99, 102, 241, 0.35), transparent 45%),
-                radial-gradient(circle at 85% 15%, rgba(56, 189, 248, 0.3), transparent 40%),
-                radial-gradient(circle at 50% 90%, rgba(20, 184, 166, 0.25), transparent 45%),
-                linear-gradient(160deg, var(--bg1), var(--bg2) 60%, var(--bg3));
+                radial-gradient(ellipse at 30% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 75% 75%, rgba(52, 211, 153, 0.07) 0%, transparent 55%),
+                radial-gradient(ellipse at 10% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
+                #050508;
             background-attachment: fixed;
             color: var(--text);
             height: 100vh;
@@ -63,57 +45,66 @@
             width: 100vw;
             height: 100vh;
             max-width: 480px;
-            padding: 12px;
+            padding: 14px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 9px;
         }
 
         .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 30px;
+            height: 32px;
         }
 
         .hist-toggle {
-            background: var(--glass);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
             color: var(--muted);
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
             cursor: pointer;
+            box-shadow: inset 0 0.5px 0 rgba(255,255,255,0.12);
         }
 
         .screen {
-            background: rgba(2, 6, 23, 0.5);
-            backdrop-filter: blur(24px) saturate(160%);
-            -webkit-backdrop-filter: blur(24px) saturate(160%);
-            border-radius: 20px;
-            padding: 16px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(60px) saturate(180%) brightness(1.05);
+            -webkit-backdrop-filter: blur(60px) saturate(180%) brightness(1.05);
+            border-radius: 24px;
+            padding: 20px 22px 16px;
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            box-shadow:
+                inset 0 0.5px 0 rgba(255,255,255,0.15),
+                inset 0 -0.5px 0 rgba(0,0,0,0.4),
+                0 30px 60px rgba(0,0,0,0.5),
+                0 1px 0 rgba(255,255,255,0.04);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            height: 120px;
+            height: 118px;
         }
 
         .expr {
             color: var(--muted);
-            font-size: 1rem;
+            font-size: 0.9rem;
+            font-weight: 300;
             text-align: right;
             min-height: 1.2rem;
+            letter-spacing: 0.03em;
         }
 
         .output {
             color: var(--text);
-            font-size: 2.4rem;
-            font-weight: bold;
+            font-size: 2.8rem;
+            font-weight: 200;
+            letter-spacing: -0.03em;
             text-align: right;
             overflow-x: auto;
             white-space: nowrap;
@@ -122,74 +113,91 @@
         .keypad {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
+            gap: 7px;
             flex: 1;
         }
 
         button {
             position: relative;
             overflow: hidden;
-            border: 1px solid var(--glass-border);
+            border: 0.5px solid rgba(255, 255, 255, 0.08);
             outline: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 14px;
+            font-size: 0.98rem;
+            font-weight: 300;
+            letter-spacing: 0.01em;
+            border-radius: 18px;
             color: var(--text);
             display: flex;
             align-items: center;
             justify-content: center;
             user-select: none;
             touch-action: manipulation;
-            backdrop-filter: blur(18px) saturate(180%);
-            -webkit-backdrop-filter: blur(18px) saturate(180%);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 6px 14px rgba(0,0,0,0.25);
+            backdrop-filter: blur(30px) saturate(200%);
+            -webkit-backdrop-filter: blur(30px) saturate(200%);
+            box-shadow:
+                inset 0 0.5px 0 rgba(255,255,255,0.14),
+                inset 0 -0.5px 0 rgba(0,0,0,0.3),
+                0 2px 8px rgba(0,0,0,0.25);
+            transition: transform 0.08s ease, filter 0.08s ease;
         }
 
         button::before {
             content: "";
             position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 55%;
-            background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0) 100%);
+            top: 0; left: 8%; right: 8%;
+            height: 0.5px;
+            background: rgba(255, 255, 255, 0.35);
             pointer-events: none;
+            border-radius: 1px;
         }
 
         button:active {
-            transform: scale(0.96);
-            filter: brightness(0.88);
+            transform: scale(0.94);
+            filter: brightness(0.75);
         }
 
-        .b-num { background-color: var(--glass); }
-        .b-op { background-color: var(--op); }
-        .b-sci { background-color: var(--sci); color: var(--accent); font-size: 0.95rem; }
-        .b-clear { background-color: var(--action); }
-        .b-eq { background-color: var(--eq); grid-column: span 2; }
+        .b-num   { background: var(--glass); }
+        .b-op    { background: var(--op); color: rgba(255,255,255,0.85); }
+        .b-sci   { background: var(--sci); color: var(--accent); font-size: 0.82rem; }
+        .b-clear { background: var(--action); color: rgba(255,255,255,0.9); }
+        .b-eq    {
+            background: var(--eq);
+            grid-column: span 2;
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: rgba(255,255,255,0.9);
+        }
 
         .drawer {
             position: fixed;
             top: 0; right: -100%;
             width: 80%; max-width: 320px; height: 100%;
-            background: rgba(15, 23, 42, 0.55);
-            backdrop-filter: blur(30px) saturate(180%);
-            -webkit-backdrop-filter: blur(30px) saturate(180%);
-            border-left: 1px solid var(--glass-border);
-            box-shadow: -10px 0 30px rgba(0,0,0,0.45);
-            transition: right 0.3s ease;
+            background: rgba(8, 8, 12, 0.7);
+            backdrop-filter: blur(50px) saturate(180%);
+            -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border-left: 0.5px solid rgba(255, 255, 255, 0.08);
+            box-shadow: -20px 0 60px rgba(0,0,0,0.6);
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 10;
-            padding: 20px;
+            padding: 28px 20px;
             display: flex;
             flex-direction: column;
         }
 
         .drawer.open { right: 0; }
-        .drawer-list { list-style: none; overflow-y: auto; flex: 1; margin: 15px 0; }
+
+        .drawer-list {
+            list-style: none;
+            overflow-y: auto;
+            flex: 1;
+            margin: 15px 0;
+        }
+
         .drawer-item {
-            padding: 10px;
-            background: rgba(2, 6, 23, 0.4);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 0.5px solid rgba(255, 255, 255, 0.07);
+            border-radius: 14px;
             margin-bottom: 8px;
         }
     </style>
@@ -252,11 +260,11 @@
 
 <div class="drawer" id="drawer">
     <div style="display:flex; justify-content:space-between;">
-        <span style="color:var(--accent); font-weight:bold;">History</span>
-        <button onclick="clearHist()" style="background:none; color:var(--action);">Clear</button>
+        <span style="color:var(--accent); font-weight:400; letter-spacing:0.05em; font-size:0.85rem; text-transform:uppercase;">History</span>
+        <button onclick="clearHist()" style="background:none; border:none; color:var(--action); font-size:0.85rem;">Clear</button>
     </div>
     <ul class="drawer-list" id="hist-list"></ul>
-    <button style="background:var(--num); padding:10px;" onclick="toggleDrawer()">Close</button>
+    <button style="background:rgba(255,255,255,0.05); border:0.5px solid rgba(255,255,255,0.08); padding:12px; border-radius:14px; font-size:0.9rem;" onclick="toggleDrawer()">Close</button>
 </div>
 
 <script>
@@ -340,7 +348,7 @@
     function saveHist(e, v) {
         const li = document.createElement('li');
         li.className = 'drawer-item';
-        li.innerHTML = `<div style="color:var(--muted); font-size:0.8rem;">${e}</div><div style="color:var(--accent); font-weight:bold;">${v}</div>`;
+        li.innerHTML = `<div style="color:var(--muted); font-size:0.78rem; margin-bottom:2px;">${e}</div><div style="color:var(--text); font-weight:200; font-size:1.1rem;">${v}</div>`;
         li.onclick = () => { current = v.toString(); reset = false; render(); toggleDrawer(); };
         histEl.prepend(li);
     }
