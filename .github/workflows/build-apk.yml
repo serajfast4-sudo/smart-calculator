@@ -38,56 +38,69 @@ jobs:
                    app/src/main/res/mipmap-xhdpi app/src/main/res/mipmap-xxhdpi \
                    app/src/main/res/mipmap-xxxhdpi
 
+          # Find calculator HTML
           HTML_FILE=$(find . -maxdepth 1 -iname "*.html" -type f | head -n 1)
           if [ -z "$HTML_FILE" ]; then
             HTML_FILE=$(find . -maxdepth 1 -iname "calculator*" -type f | head -n 1)
           fi
-
           if [ -n "$HTML_FILE" ]; then
             cp "$HTML_FILE" app/src/main/assets/index.html
-            echo "Successfully mapped HTML source: $HTML_FILE"
+            echo "Mapped: $HTML_FILE"
           else
-            echo "<html><body><h1>Calculator App</h1></body></html>" > app/src/main/assets/index.html
-            echo "Warning: No calculator file found, using default stub."
+            echo "<html><body><h1>Smart Calculator</h1></body></html>" > app/src/main/assets/index.html
           fi
 
+          # Generate launcher icon from SVG
           if [ -f "Icon.svg" ]; then
             rsvg-convert -w 48  -h 48  Icon.svg -o app/src/main/res/mipmap-mdpi/ic_launcher.png
             rsvg-convert -w 72  -h 72  Icon.svg -o app/src/main/res/mipmap-hdpi/ic_launcher.png
             rsvg-convert -w 96  -h 96  Icon.svg -o app/src/main/res/mipmap-xhdpi/ic_launcher.png
             rsvg-convert -w 144 -h 144 Icon.svg -o app/src/main/res/mipmap-xxhdpi/ic_launcher.png
             rsvg-convert -w 192 -h 192 Icon.svg -o app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-            echo "Icon generated from Icon.svg"
-          else
-            echo "No Icon.svg found, using default Android icon"
+            echo "Icon generated"
           fi
 
-          cat << 'EOF' > app/src/main/java/com/smartcalculator/app/MainActivity.java
-          package com.smartcalculator.app;
+          # Write MainActivity.kt (Kotlin)
+          cat << 'EOF' > app/src/main/java/com/smartcalculator/app/MainActivity.kt
+          package com.smartcalculator.app
 
-          import android.app.Activity;
-          import android.os.Bundle;
-          import android.webkit.WebSettings;
-          import android.webkit.WebView;
+          import android.app.Activity
+          import android.os.Bundle
+          import android.webkit.WebSettings
+          import android.webkit.WebView
 
-          public class MainActivity extends Activity {
-              @Override
-              protected void onCreate(Bundle savedInstanceState) {
-                  super.onCreate(savedInstanceState);
-                  WebView webView = new WebView(this);
-                  setContentView(webView);
+          class MainActivity : Activity() {
 
-                  WebSettings webSettings = webView.getSettings();
-                  webSettings.setJavaScriptEnabled(true);
-                  webSettings.setDomStorageEnabled(true);
-                  webSettings.setAllowFileAccess(true);
-                  webSettings.setAllowContentAccess(true);
+              private lateinit var webView: WebView
 
-                  webView.loadUrl("file:///android_asset/index.html");
+              override fun onCreate(savedInstanceState: Bundle?) {
+                  super.onCreate(savedInstanceState)
+
+                  webView = WebView(this)
+                  setContentView(webView)
+
+                  webView.settings.apply {
+                      javaScriptEnabled = true
+                      domStorageEnabled = true
+                      allowFileAccess = true
+                      allowContentAccess = true
+                      cacheMode = WebSettings.LOAD_NO_CACHE
+                      setSupportZoom(false)
+                      displayZoomControls = false
+                      builtInZoomControls = false
+                  }
+
+                  webView.loadUrl("file:///android_asset/index.html")
+              }
+
+              override fun onBackPressed() {
+                  if (webView.canGoBack()) webView.goBack()
+                  else super.onBackPressed()
               }
           }
           EOF
 
+          # Write AndroidManifest.xml
           cat << 'EOF' > app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.INTERNET" />
@@ -98,8 +111,10 @@ jobs:
                   android:label="Smart Calculator"
                   android:supportsRtl="true"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-                  <activity android:name=".MainActivity"
-                      android:exported="true">
+                  <activity
+                      android:name=".MainActivity"
+                      android:exported="true"
+                      android:configChanges="orientation|screenSize|keyboardHidden">
                       <intent-filter>
                           <action android:name="android.intent.action.MAIN" />
                           <category android:name="android.intent.category.LAUNCHER" />
@@ -109,6 +124,7 @@ jobs:
           </manifest>
           EOF
 
+          # Root build.gradle — with Kotlin classpath
           cat << 'EOF' > build.gradle
           buildscript {
               repositories {
@@ -117,6 +133,7 @@ jobs:
               }
               dependencies {
                   classpath 'com.android.tools.build:gradle:8.1.1'
+                  classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0'
               }
           }
           allprojects {
@@ -127,8 +144,10 @@ jobs:
           }
           EOF
 
+          # App-level build.gradle — Kotlin plugin + stdlib
           cat << 'EOF' > app/build.gradle
           apply plugin: 'com.android.application'
+          apply plugin: 'org.jetbrains.kotlin.android'
 
           android {
               compileSdk 34
@@ -147,22 +166,32 @@ jobs:
                       minifyEnabled false
                   }
               }
+
+              kotlinOptions {
+                  jvmTarget = '17'
+              }
+          }
+
+          dependencies {
+              implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.0'
           }
           EOF
 
+          # settings.gradle
           cat << 'EOF' > settings.gradle
           include ':app'
           EOF
 
+          # Download Gradle 8.4
           echo "Downloading Gradle 8.4..."
           wget -q https://services.gradle.org/distributions/gradle-8.4-bin.zip
           unzip -q gradle-8.4-bin.zip
           export PATH="$PWD/gradle-8.4/bin:$PATH"
 
-          echo "Executing Gradle build..."
+          echo "Building APK..."
           gradle assembleDebug
 
-      - name: Upload APK Artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: SmartCalculator-APK
