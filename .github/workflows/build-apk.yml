@@ -55,39 +55,41 @@ jobs:
             rsvg-convert -w 96  -h 96  Icon.svg -o app/src/main/res/mipmap-xhdpi/ic_launcher.png
             rsvg-convert -w 144 -h 144 Icon.svg -o app/src/main/res/mipmap-xxhdpi/ic_launcher.png
             rsvg-convert -w 192 -h 192 Icon.svg -o app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+            echo "Icon generated"
           fi
 
-          cat << 'EOF' > app/src/main/java/com/smartcalculator/app/MainActivity.kt
-          package com.smartcalculator.app
+          cat << 'EOF' > app/src/main/java/com/smartcalculator/app/MainActivity.java
+          package com.smartcalculator.app;
 
-          import android.app.Activity
-          import android.os.Bundle
-          import android.webkit.WebSettings
-          import android.webkit.WebView
+          import android.app.Activity;
+          import android.os.Bundle;
+          import android.webkit.WebSettings;
+          import android.webkit.WebView;
 
-          class MainActivity : Activity() {
-              private lateinit var webView: WebView
+          public class MainActivity extends Activity {
+              private WebView webView;
 
-              override fun onCreate(savedInstanceState: Bundle?) {
-                  super.onCreate(savedInstanceState)
-                  webView = WebView(this)
-                  setContentView(webView)
-                  webView.settings.apply {
-                      javaScriptEnabled = true
-                      domStorageEnabled = true
-                      allowFileAccess = true
-                      allowContentAccess = true
-                      cacheMode = WebSettings.LOAD_NO_CACHE
-                      setSupportZoom(false)
-                      displayZoomControls = false
-                      builtInZoomControls = false
-                  }
-                  webView.loadUrl("file:///android_asset/index.html")
+              @Override
+              protected void onCreate(Bundle savedInstanceState) {
+                  super.onCreate(savedInstanceState);
+                  webView = new WebView(this);
+                  setContentView(webView);
+                  WebSettings s = webView.getSettings();
+                  s.setJavaScriptEnabled(true);
+                  s.setDomStorageEnabled(true);
+                  s.setAllowFileAccess(true);
+                  s.setAllowContentAccess(true);
+                  s.setCacheMode(WebSettings.LOAD_NO_CACHE);
+                  s.setSupportZoom(false);
+                  s.setDisplayZoomControls(false);
+                  s.setBuiltInZoomControls(false);
+                  webView.loadUrl("file:///android_asset/index.html");
               }
 
-              override fun onBackPressed() {
-                  if (webView.canGoBack()) webView.goBack()
-                  else super.onBackPressed()
+              @Override
+              public void onBackPressed() {
+                  if (webView.canGoBack()) webView.goBack();
+                  else super.onBackPressed();
               }
           }
           EOF
@@ -117,14 +119,12 @@ jobs:
 
           cat << 'EOF' > build.gradle
           buildscript {
-              ext.kotlin_version = '1.8.22'
               repositories {
                   google()
                   mavenCentral()
               }
               dependencies {
                   classpath 'com.android.tools.build:gradle:8.1.1'
-                  classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
               }
           }
           allprojects {
@@ -137,7 +137,6 @@ jobs:
 
           cat << 'EOF' > app/build.gradle
           apply plugin: 'com.android.application'
-          apply plugin: 'kotlin-android'
 
           android {
               compileSdk 34
@@ -152,13 +151,6 @@ jobs:
               buildTypes {
                   release { minifyEnabled false }
               }
-              kotlinOptions {
-                  jvmTarget = '17'
-              }
-          }
-
-          dependencies {
-              implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
           }
           EOF
 
@@ -172,7 +164,7 @@ jobs:
           export PATH="$PWD/gradle-8.4/bin:$PATH"
 
           echo "Building APK..."
-          gradle assembleDebug --no-daemon --stacktrace
+          gradle assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
