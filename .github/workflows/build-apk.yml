@@ -38,7 +38,6 @@ jobs:
                    app/src/main/res/mipmap-xhdpi app/src/main/res/mipmap-xxhdpi \
                    app/src/main/res/mipmap-xxxhdpi
 
-          # Find calculator HTML
           HTML_FILE=$(find . -maxdepth 1 -iname "*.html" -type f | head -n 1)
           if [ -z "$HTML_FILE" ]; then
             HTML_FILE=$(find . -maxdepth 1 -iname "calculator*" -type f | head -n 1)
@@ -50,17 +49,14 @@ jobs:
             echo "<html><body><h1>Smart Calculator</h1></body></html>" > app/src/main/assets/index.html
           fi
 
-          # Generate launcher icon from SVG
           if [ -f "Icon.svg" ]; then
             rsvg-convert -w 48  -h 48  Icon.svg -o app/src/main/res/mipmap-mdpi/ic_launcher.png
             rsvg-convert -w 72  -h 72  Icon.svg -o app/src/main/res/mipmap-hdpi/ic_launcher.png
             rsvg-convert -w 96  -h 96  Icon.svg -o app/src/main/res/mipmap-xhdpi/ic_launcher.png
             rsvg-convert -w 144 -h 144 Icon.svg -o app/src/main/res/mipmap-xxhdpi/ic_launcher.png
             rsvg-convert -w 192 -h 192 Icon.svg -o app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-            echo "Icon generated"
           fi
 
-          # Write MainActivity.kt (Kotlin)
           cat << 'EOF' > app/src/main/java/com/smartcalculator/app/MainActivity.kt
           package com.smartcalculator.app
 
@@ -70,15 +66,12 @@ jobs:
           import android.webkit.WebView
 
           class MainActivity : Activity() {
-
               private lateinit var webView: WebView
 
               override fun onCreate(savedInstanceState: Bundle?) {
                   super.onCreate(savedInstanceState)
-
                   webView = WebView(this)
                   setContentView(webView)
-
                   webView.settings.apply {
                       javaScriptEnabled = true
                       domStorageEnabled = true
@@ -89,7 +82,6 @@ jobs:
                       displayZoomControls = false
                       builtInZoomControls = false
                   }
-
                   webView.loadUrl("file:///android_asset/index.html")
               }
 
@@ -100,7 +92,6 @@ jobs:
           }
           EOF
 
-          # Write AndroidManifest.xml
           cat << 'EOF' > app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.INTERNET" />
@@ -124,16 +115,16 @@ jobs:
           </manifest>
           EOF
 
-          # Root build.gradle — with Kotlin classpath
           cat << 'EOF' > build.gradle
           buildscript {
+              ext.kotlin_version = '1.8.22'
               repositories {
                   google()
                   mavenCentral()
               }
               dependencies {
                   classpath 'com.android.tools.build:gradle:8.1.1'
-                  classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0'
+                  classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
               }
           }
           allprojects {
@@ -144,15 +135,13 @@ jobs:
           }
           EOF
 
-          # App-level build.gradle — Kotlin plugin + stdlib
           cat << 'EOF' > app/build.gradle
           apply plugin: 'com.android.application'
-          apply plugin: 'org.jetbrains.kotlin.android'
+          apply plugin: 'kotlin-android'
 
           android {
               compileSdk 34
               namespace 'com.smartcalculator.app'
-
               defaultConfig {
                   applicationId "com.smartcalculator.app"
                   minSdk 24
@@ -160,36 +149,30 @@ jobs:
                   versionCode 1
                   versionName "1.0"
               }
-
               buildTypes {
-                  release {
-                      minifyEnabled false
-                  }
+                  release { minifyEnabled false }
               }
-
               kotlinOptions {
                   jvmTarget = '17'
               }
           }
 
           dependencies {
-              implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.0'
+              implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
           }
           EOF
 
-          # settings.gradle
           cat << 'EOF' > settings.gradle
           include ':app'
           EOF
 
-          # Download Gradle 8.4
           echo "Downloading Gradle 8.4..."
           wget -q https://services.gradle.org/distributions/gradle-8.4-bin.zip
           unzip -q gradle-8.4-bin.zip
           export PATH="$PWD/gradle-8.4/bin:$PATH"
 
           echo "Building APK..."
-          gradle assembleDebug
+          gradle assembleDebug --no-daemon --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
