@@ -432,7 +432,7 @@
                     </div>
                 </div>
                 <div class="gpt-key-input-wrap">
-                    <input class="gpt-key-input" id="gpt-key-input" type="password" placeholder="AIza..." autocomplete="off" autocorrect="off" spellcheck="false" />
+                    <input class="gpt-key-input" id="gpt-key-input" type="password" placeholder="AQ... or AIza..." autocomplete="off" autocorrect="off" spellcheck="false" />
                     <button class="gpt-key-eye" onclick="toggleKeyVis()" id="gpt-eye">👁</button>
                 </div>
                 <button class="gpt-key-save" onclick="saveApiKey()">Connect to Gemini</button>
@@ -496,7 +496,7 @@ function getApiKey() {
 
 function saveApiKey() {
     const val = document.getElementById('gpt-key-input').value.trim();
-    if (!val.startsWith('AIza') || val.length < 20) {
+    if (!val.startsWith('AQ') && !val.startsWith('AIza')) {
         document.getElementById('gpt-key-input').style.borderColor = 'var(--red)';
         setTimeout(() => document.getElementById('gpt-key-input').style.borderColor = '', 1500);
         return;
@@ -525,7 +525,7 @@ function toggleKeyVis() {
 }
 
 function initGpt() {
-    const hasKey = getApiKey().startsWith('AIza');
+    const hasKey = getApiKey().length > 10;
     if (hasKey) showChatUI(); else showKeyScreen();
     const input = document.getElementById('gpt-input');
     input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); gptSend(); } });
