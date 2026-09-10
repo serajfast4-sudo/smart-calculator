@@ -31,8 +31,6 @@ jobs:
         run: sudo apt-get install -y librsvg2-bin
 
       - name: Generate Project Files and Build APK
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           mkdir -p app/src/main/java/com/smartcalculator/app
           mkdir -p app/src/main/assets
@@ -51,14 +49,7 @@ jobs:
           else
             echo "<html><body><h1>Smart Calculator</h1></body></html>" > app/src/main/assets/index.html
           fi
-
-          # Inject the OpenAI API key into the HTML (replaces the placeholder)
-          if [ -n "$OPENAI_API_KEY" ]; then
-            sed -i "s|__OPENAI_API_KEY__|${OPENAI_API_KEY}|g" app/src/main/assets/index.html
-            echo "OpenAI key injected."
-          else
-            echo "No OPENAI_API_KEY secret found â€” ChatGPT tab will show setup instructions."
-          fi
+          # No key injection needed â€” users enter their own OpenAI key inside the app
 
           # Generate icons from SVG if present
           if [ -f "Icon.svg" ]; then
