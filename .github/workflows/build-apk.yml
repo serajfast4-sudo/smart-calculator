@@ -31,6 +31,8 @@ jobs:
         run: sudo apt-get install -y librsvg2-bin
 
       - name: Generate Project Files and Build APK
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           mkdir -p app/src/main/java/com/smartcalculator/app
           mkdir -p app/src/main/assets
@@ -38,6 +40,7 @@ jobs:
                    app/src/main/res/mipmap-xhdpi app/src/main/res/mipmap-xxhdpi \
                    app/src/main/res/mipmap-xxxhdpi
 
+          # Find and copy the HTML file
           HTML_FILE=$(find . -maxdepth 1 -iname "*.html" -type f | head -n 1)
           if [ -z "$HTML_FILE" ]; then
             HTML_FILE=$(find . -maxdepth 1 -iname "calculator*" -type f | head -n 1)
@@ -49,13 +52,22 @@ jobs:
             echo "<html><body><h1>Smart Calculator</h1></body></html>" > app/src/main/assets/index.html
           fi
 
+          # Inject the OpenAI API key into the HTML (replaces the placeholder)
+          if [ -n "$OPENAI_API_KEY" ]; then
+            sed -i "s|__OPENAI_API_KEY__|${OPENAI_API_KEY}|g" app/src/main/assets/index.html
+            echo "OpenAI key injected."
+          else
+            echo "No OPENAI_API_KEY secret found â€” ChatGPT tab will show setup instructions."
+          fi
+
+          # Generate icons from SVG if present
           if [ -f "Icon.svg" ]; then
             rsvg-convert -w 48  -h 48  Icon.svg -o app/src/main/res/mipmap-mdpi/ic_launcher.png
             rsvg-convert -w 72  -h 72  Icon.svg -o app/src/main/res/mipmap-hdpi/ic_launcher.png
             rsvg-convert -w 96  -h 96  Icon.svg -o app/src/main/res/mipmap-xhdpi/ic_launcher.png
             rsvg-convert -w 144 -h 144 Icon.svg -o app/src/main/res/mipmap-xxhdpi/ic_launcher.png
             rsvg-convert -w 192 -h 192 Icon.svg -o app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-            echo "Icon generated"
+            echo "Icon generated."
           fi
 
           cat << 'EOF' > app/src/main/java/com/smartcalculator/app/MainActivity.java
@@ -65,6 +77,7 @@ jobs:
           import android.os.Bundle;
           import android.webkit.WebSettings;
           import android.webkit.WebView;
+          import android.webkit.WebViewClient;
 
           public class MainActivity extends Activity {
               private WebView webView;
@@ -83,6 +96,9 @@ jobs:
                   s.setSupportZoom(false);
                   s.setDisplayZoomControls(false);
                   s.setBuiltInZoomControls(false);
+                  // Allow network requests from file:// origin (needed for OpenAI API calls)
+                  s.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+                  webView.setWebViewClient(new WebViewClient());
                   webView.loadUrl("file:///android_asset/index.html");
               }
 
@@ -103,6 +119,7 @@ jobs:
                   android:allowBackup="true"
                   android:label="Smart Calculator"
                   android:supportsRtl="true"
+                  android:usesCleartextTraffic="true"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
                   <activity
                       android:name=".MainActivity"
