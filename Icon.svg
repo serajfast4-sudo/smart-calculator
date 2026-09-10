@@ -1,59 +1,196 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYToyNTZlMjVmZC1lNDI3LTQxZTEtOWRmMy0xYzM0MjBjYzExYjgAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaEYyvGhI/8ZNnSinAoiap5kAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDpkNDRjNDQ2Yi0xYmM2LTQwNTQtOTcwMy1mMDdlZTk3MjcxZDdscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNo7luRGuk4BHBcDa0eY8hGNwAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFgg08uu47Ce+C2tbcXlgM8t9xMyHJG64VUlNs8Y08QLdy2kZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaJy+G902t94xUOhbfUIAXnoAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRNAAAAAAAAAAAAAAAAAGRoYXNoWCBAczHclqChcDJe1Ng8Ot0XdW25Rkii7WfQPIrTa93o52RuYW1lbmp1bWJmIG1hbmlmZXN0amV4Y2x1c2lvbnOBomVzdGFydBh9Zmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjI1NmUyNWZkLWU0MjctNDFlMS05ZGYzLTFjMzQyMGNjMTFiOC9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjNiODZiMzY5LTA2NjAtNDFmMy1hMGI2LWNlZjRjNTVlNjdjMXJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCDTy67jsJ74La1txeWAzy33EzIckbrhVSU2zxjTxAt3LaJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggPRws3f0toSBvmwTEgK1P+m5bZP7c2rZJGO0fr1II+wSiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFggHdclOrhfeAEHbpZBJZj5TOuBEC2BRaKVbzOL1VOhJ050Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQNdajqBfE75ZqUsn6SiaEYcbfqJgGa6KbXW8GkujtXIAJECh4wUdu7hZtc7TJ+uVor333xI0rrNE6/UBqKX/tiE=</c2pa:manifest></metadata>
   <defs>
-    <!-- Background Gradient -->
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0f172a" />
-      <stop offset="50%" stop-color="#1e293b" />
-      <stop offset="100%" stop-color="#020617" />
+    <!-- App background: same deep dark as the app body -->
+    <linearGradient id="appBg" x1="30%" y1="0%" x2="75%" y2="100%">
+      <stop offset="0%" stop-color="#12122a"/>
+      <stop offset="50%" stop-color="#0a0a1a"/>
+      <stop offset="100%" stop-color="#050508"/>
     </linearGradient>
 
-    <!-- Accent Gradient -->
-    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#38bdf8" />
-      <stop offset="100%" stop-color="#2563eb" />
+    <!-- Subtle radial ambient like app body radial gradients -->
+    <radialGradient id="ambientPurple" cx="25%" cy="20%" r="55%">
+      <stop offset="0%" stop-color="rgba(99,102,241,0.18)"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+    <radialGradient id="ambientGreen" cx="78%" cy="78%" r="45%">
+      <stop offset="0%" stop-color="rgba(52,211,153,0.10)"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+
+    <!-- App screen: same as .screen element -->
+    <linearGradient id="screenBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(20,20,35,0.95)"/>
+      <stop offset="100%" stop-color="rgba(12,12,24,0.95)"/>
     </linearGradient>
 
-    <!-- Equals Button Glow Gradient -->
-    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#22c55e" />
-      <stop offset="100%" stop-color="#16a34a" />
+    <!-- b-num button: rgba(255,255,255,0.05) -->
+    <linearGradient id="btnNum" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.07)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.03)"/>
     </linearGradient>
 
-    <!-- Subtle Drop Shadow -->
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.5" />
+    <!-- b-op button: rgba(255,255,255,0.09) -->
+    <linearGradient id="btnOp" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.13)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.06)"/>
+    </linearGradient>
+
+    <!-- b-clear: rgba(180,40,40,0.35) -->
+    <linearGradient id="btnClear" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(210,50,50,0.5)"/>
+      <stop offset="100%" stop-color="rgba(140,25,25,0.4)"/>
+    </linearGradient>
+
+    <!-- b-eq: rgba(30,120,80,0.4) — the green equals -->
+    <linearGradient id="btnEq" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(52,211,153,0.45)"/>
+      <stop offset="100%" stop-color="rgba(20,120,70,0.45)"/>
+    </linearGradient>
+
+    <!-- Display text: app blue -->
+    <linearGradient id="displayText" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#7dd3fc"/>
+    </linearGradient>
+
+    <!-- Top gloss same as app inset highlight -->
+    <linearGradient id="gloss" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.13)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+
+    <clipPath id="appClip">
+      <rect width="512" height="512" rx="112" ry="112"/>
+    </clipPath>
+
+    <!-- Inset top highlight line (same as button::before) -->
+    <linearGradient id="insetLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="20%" stop-color="rgba(255,255,255,0.28)"/>
+      <stop offset="80%" stop-color="rgba(255,255,255,0.28)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+
+    <filter id="screenBlur">
+      <feGaussianBlur stdDeviation="0.5"/>
+    </filter>
+    <filter id="softShadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="rgba(0,0,0,0.5)"/>
+    </filter>
+    <filter id="eqGlow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
 
-  <!-- Base Icon Shape (Squircle for Modern Android Style) -->
-  <rect x="32" y="32" width="448" height="448" rx="100" fill="url(#bgGrad)" filter="url(#shadow)" />
+  <!-- ── BACKGROUND ── -->
+  <rect width="512" height="512" rx="112" ry="112" fill="url(#appBg)"/>
+  <rect width="512" height="512" rx="112" ry="112" fill="url(#ambientPurple)"/>
+  <rect width="512" height="512" rx="112" ry="112" fill="url(#ambientGreen)"/>
 
-  <!-- Inner Border Highlight -->
-  <rect x="34" y="34" width="444" height="444" rx="98" fill="none" stroke="#334155" stroke-width="4" opacity="0.6" />
+  <!-- ── CALCULATOR BODY (same card style as app panels) ── -->
+  <rect x="72" y="72" width="368" height="368" rx="32" ry="32"
+        fill="rgba(255,255,255,0.025)"
+        stroke="rgba(255,255,255,0.08)" stroke-width="1"
+        filter="url(#softShadow)"/>
 
-  <!-- Display Bar Graphic -->
-  <rect x="80" y="88" width="352" height="72" rx="16" fill="#020617" stroke="#334155" stroke-width="3" />
-  <circle cx="112" cy="124" r="8" fill="#38bdf8" />
-  <rect x="260" y="116" width="144" height="16" rx="8" fill="#38bdf8" opacity="0.8" />
+  <!-- ── SCREEN (same as .screen) ── -->
+  <rect x="96" y="92" width="320" height="100" rx="18" ry="18"
+        fill="url(#screenBg)"
+        stroke="rgba(255,255,255,0.10)" stroke-width="1"/>
+  <!-- Screen inset top shine -->
+  <rect x="96" y="92" width="320" height="1.5" rx="1" fill="rgba(255,255,255,0.12)"/>
+  <!-- Screen bottom shadow -->
+  <rect x="96" y="190" width="320" height="1.5" rx="1" fill="rgba(0,0,0,0.25)"/>
+  <!-- Expr line -->
+  <text x="400" y="126"
+        font-family="'SF Pro Display',system-ui,sans-serif"
+        font-size="22" font-weight="300"
+        fill="rgba(255,255,255,0.28)" text-anchor="end">9×9+</text>
+  <!-- Result -->
+  <text x="400" y="172"
+        font-family="'SF Pro Display',system-ui,sans-serif"
+        font-size="52" font-weight="200" letter-spacing="-2"
+        fill="rgba(255,255,255,0.92)" text-anchor="end">90</text>
 
-  <!-- Keypad Button Elements -->
-  <!-- Top Left Key -->
-  <rect x="80" y="192" width="100" height="100" rx="20" fill="#334155" />
-  <text x="130" y="258" font-family="sans-serif" font-size="44" font-weight="bold" fill="#f8fafc" text-anchor="middle">√</text>
+  <!-- ── BUTTON GRID 4×3 ── -->
+  <!-- Gap: 10px, start x=96, y=208, btn w=68, h=54 -->
 
-  <!-- Top Right Key -->
-  <rect x="206" y="192" width="100" height="100" rx="20" fill="#334155" />
-  <text x="256" y="254" font-family="sans-serif" font-size="36" font-weight="bold" fill="#38bdf8" text-anchor="middle">f(x)</text>
+  <!-- Row 1: AC  DEL  %  ÷ -->
+  <!-- AC (clear) -->
+  <rect x="96" y="208" width="68" height="54" rx="15" fill="url(#btnClear)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="104" y="208" width="52" height="1" fill="url(#insetLine)"/>
+  <text x="130" y="242" font-family="system-ui" font-size="19" font-weight="400" fill="rgba(255,255,255,0.92)" text-anchor="middle">AC</text>
 
-  <!-- Operator Key -->
-  <rect x="332" y="192" width="100" height="100" rx="20" fill="url(#accentGrad)" />
-  <text x="382" y="258" font-family="sans-serif" font-size="52" font-weight="bold" fill="#ffffff" text-anchor="middle">÷</text>
+  <!-- DEL (clear) -->
+  <rect x="174" y="208" width="68" height="54" rx="15" fill="url(#btnClear)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="182" y="208" width="52" height="1" fill="url(#insetLine)"/>
+  <text x="208" y="242" font-family="system-ui" font-size="19" font-weight="400" fill="rgba(255,255,255,0.92)" text-anchor="middle">DEL</text>
 
-  <!-- Bottom Left Key -->
-  <rect x="80" y="318" width="100" height="100" rx="20" fill="#334155" />
-  <text x="130" y="384" font-family="sans-serif" font-size="52" font-weight="bold" fill="#ffffff" text-anchor="middle">×</text>
+  <!-- % (sci) -->
+  <rect x="252" y="208" width="68" height="54" rx="15" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="260" y="208" width="52" height="1" fill="url(#insetLine)"/>
+  <text x="286" y="242" font-family="system-ui" font-size="21" font-weight="300" fill="rgba(255,255,255,0.55)" text-anchor="middle">%</text>
 
-  <!-- Equals Accent Key -->
-  <rect x="206" y="318" width="226" height="100" rx="20" fill="url(#greenGrad)" />
-  <text x="319" y="386" font-family="sans-serif" font-size="64" font-weight="bold" fill="#ffffff" text-anchor="middle">=</text>
+  <!-- ÷ (op) -->
+  <rect x="330" y="208" width="86" height="54" rx="15" fill="url(#btnOp)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="338" y="208" width="70" height="1" fill="url(#insetLine)"/>
+  <text x="373" y="243" font-family="system-ui" font-size="26" font-weight="300" fill="rgba(255,255,255,0.92)" text-anchor="middle">÷</text>
+
+  <!-- Row 2: 7  8  9  × -->
+  <rect x="96" y="272" width="68" height="54" rx="15" fill="url(#btnNum)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="104" y="272" width="52" height="1" fill="url(#insetLine)"/>
+  <text x="130" y="307" font-family="system-ui" font-size="24" font-weight="300" fill="rgba(255,255,255,0.92)" text-anchor="middle">7</text>
+
+  <rect x="174" y="272" width="68" height="54" rx="15" fill="url(#btnNum)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="182" y="272" width="52" height="1" fill="url(#insetLine)"/>
+  <text x="208" y="307" font-family="system-ui" font-size="24" font-weight="300" fill="rgba(255,255,255,0.92)" text-anchor="middle">8</text>
+
+  <rect x="252" y="272" width="68" height="54" rx="15" fill="url(#btnNum)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="260" y="272" width="52" height="1" fill="url(#insetLine)"/>
+  <text x="286" y="307" font-family="system-ui" font-size="24" font-weight="300" fill="rgba(255,255,255,0.92)" text-anchor="middle">9</text>
+
+  <rect x="330" y="272" width="86" height="54" rx="15" fill="url(#btnOp)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="338" y="272" width="70" height="1" fill="url(#insetLine)"/>
+  <text x="373" y="307" font-family="system-ui" font-size="26" font-weight="300" fill="rgba(255,255,255,0.92)" text-anchor="middle">×</text>
+
+  <!-- Row 3: 4  5  6  − -->
+  <rect x="96" y="336" width="68" height="54" rx="15" fill="url(#btnNum)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="104" y="336" width="52" height="1" fill="url(#insetLine)"/>
+  <text x="130" y="371" font-family="system-ui" font-size="24" font-weight="300" fill="rgba(255,255,255,0.92)" text-anchor="middle">4</text>
+
+  <rect x="174" y="336" width="68" height="54" rx="15" fill="url(#btnNum)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="182" y="336" width="52" height="1" fill="url(#insetLine)"/>
+  <text x="208" y="371" font-family="system-ui" font-size="24" font-weight="300" fill="rgba(255,255,255,0.92)" text-anchor="middle">5</text>
+
+  <rect x="252" y="336" width="68" height="54" rx="15" fill="url(#btnNum)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="260" y="336" width="52" height="1" fill="url(#insetLine)"/>
+  <text x="286" y="371" font-family="system-ui" font-size="24" font-weight="300" fill="rgba(255,255,255,0.92)" text-anchor="middle">6</text>
+
+  <rect x="330" y="336" width="86" height="54" rx="15" fill="url(#btnOp)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="338" y="336" width="70" height="1" fill="url(#insetLine)"/>
+  <text x="373" y="373" font-family="system-ui" font-size="32" font-weight="200" fill="rgba(255,255,255,0.92)" text-anchor="middle">−</text>
+
+  <!-- Row 4: 0  .  =  + -->
+  <rect x="96" y="400" width="68" height="40" rx="15" fill="url(#btnNum)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="104" y="400" width="52" height="1" fill="url(#insetLine)"/>
+  <text x="130" y="427" font-family="system-ui" font-size="24" font-weight="300" fill="rgba(255,255,255,0.92)" text-anchor="middle">0</text>
+
+  <rect x="174" y="400" width="68" height="40" rx="15" fill="url(#btnNum)" stroke="rgba(255,255,255,0.08)" stroke-width="0.75"/>
+  <rect x="182" y="400" width="52" height="1" fill="url(#insetLine)"/>
+  <text x="208" y="427" font-family="system-ui" font-size="24" font-weight="300" fill="rgba(255,255,255,0.92)" text-anchor="middle">.</text>
+
+  <!-- = spans wide, green like app b-eq -->
+  <rect x="252" y="400" width="164" height="40" rx="15" fill="url(#btnEq)"
+        stroke="rgba(52,211,153,0.2)" stroke-width="0.75" filter="url(#eqGlow)"/>
+  <rect x="260" y="400" width="148" height="1" fill="rgba(255,255,255,0.18)"/>
+  <text x="334" y="427" font-family="system-ui" font-size="28" font-weight="200"
+        fill="rgba(255,255,255,0.95)" text-anchor="middle">=</text>
+
+  <!-- ── GLOSS (same as app top inset shine) ── -->
+  <rect width="512" height="256" rx="112" ry="112" fill="url(#gloss)" clip-path="url(#appClip)"/>
+
+  <!-- ── OUTER BORDER ── -->
+  <rect width="512" height="512" rx="112" ry="112" fill="none"
+        stroke="rgba(255,255,255,0.09)" stroke-width="1.5"/>
 </svg>
