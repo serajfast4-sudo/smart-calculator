@@ -176,8 +176,8 @@
         /* ── GPT CHAT ── */
         .gpt-panel { display:flex; flex-direction:column; height:100%; overflow:hidden; }
         .gpt-header { display:flex; align-items:center; gap:10px; padding:10px 14px; background:rgba(16,163,127,0.06); border:0.5px solid rgba(16,163,127,0.15); border-radius:16px; flex-shrink:0; }
-        .gpt-logo { width:28px; height:28px; border-radius:8px; background:rgba(255,255,255,0.06); border:0.5px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-        .gpt-logo svg { width:20px; height:20px; }
+        .gpt-logo { width:28px; height:28px; border-radius:8px; background:rgba(255,255,255,0.06); border:0.5px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.3rem; line-height:1; color:#fff; }
+        
         .gpt-header-text { flex:1; }
         .gpt-header-title { font-size:0.85rem; font-weight:600; color:var(--gpt-green); }
         .gpt-header-sub { font-size:0.65rem; color:var(--muted); }
@@ -187,8 +187,8 @@
         .gpt-msg { display:flex; gap:10px; align-items:flex-start; }
         .gpt-msg.user { flex-direction:row-reverse; }
         .gpt-avatar { width:28px; height:28px; border-radius:8px; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:600; }
-        .gpt-avatar.ai { background:rgba(255,255,255,0.06); border:0.5px solid rgba(255,255,255,0.1); }
-        .gpt-avatar.ai svg { width:18px; height:18px; }
+        .gpt-avatar.ai { background:rgba(255,255,255,0.06); border:0.5px solid rgba(255,255,255,0.1); font-size:1rem; line-height:1; color:#fff; }
+        
         .gpt-avatar.user { background:rgba(255,255,255,0.1); border:0.5px solid rgba(255,255,255,0.15); color:var(--muted); }
         .gpt-bubble { max-width:82%; padding:10px 13px; border-radius:16px; font-size:0.82rem; line-height:1.55; word-break:break-word; }
         .gpt-msg.ai .gpt-bubble { background:rgba(255,255,255,0.05); border:0.5px solid rgba(255,255,255,0.08); color:var(--text); border-top-left-radius:4px; }
@@ -424,7 +424,7 @@
             <div id="gpt-key-screen" class="gpt-key-screen" style="display:none;">
                 <div class="gpt-key-header">
                     <div class="gpt-key-icon">
-                        <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gx" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4285f4"/><stop offset="50%" stop-color="#9b72cb"/><stop offset="100%" stop-color="#d96570"/></linearGradient></defs><path d="M14 2C14 2 15.5 9 19 13C23 17 26 18.5 26 18.5C26 18.5 23 20 19 24C15.5 27.5 14 26 14 26C14 26 12.5 27.5 9 24C5 20 2 18.5 2 18.5C2 18.5 5 17 9 13C12.5 9 14 2 14 2Z" fill="url(#gx)"/></svg>
+                        
                     </div>
                     <div>
                         <div class="gpt-key-title">Enter your Gemini API key</div>
@@ -443,9 +443,7 @@
             </div>
             <div id="gpt-chat-ui" class="gpt-panel">
                 <div class="gpt-header">
-                    <div class="gpt-logo">
-                        <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gx" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4285f4"/><stop offset="50%" stop-color="#9b72cb"/><stop offset="100%" stop-color="#d96570"/></linearGradient></defs><path d="M14 2C14 2 15.5 9 19 13C23 17 26 18.5 26 18.5C26 18.5 23 20 19 24C15.5 27.5 14 26 14 26C14 26 12.5 27.5 9 24C5 20 2 18.5 2 18.5C2 18.5 5 17 9 13C12.5 9 14 2 14 2Z" fill="url(#gx)"/></svg>
-                    </div>
+                    <div class="gpt-logo">✦</div>
                     <div class="gpt-header-text">
                         <div class="gpt-header-title">Gemini</div>
                         <div class="gpt-header-sub">Powered by Google Gemini</div>
@@ -458,7 +456,7 @@
                 <div class="gpt-messages" id="gpt-messages">
                     <div class="gpt-msg ai">
                         <div class="gpt-avatar ai">
-                            <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gx" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4285f4"/><stop offset="50%" stop-color="#9b72cb"/><stop offset="100%" stop-color="#d96570"/></linearGradient></defs><path d="M14 2C14 2 15.5 9 19 13C23 17 26 18.5 26 18.5C26 18.5 23 20 19 24C15.5 27.5 14 26 14 26C14 26 12.5 27.5 9 24C5 20 2 18.5 2 18.5C2 18.5 5 17 9 13C12.5 9 14 2 14 2Z" fill="url(#gx)"/></svg>
+                            
                         </div>
                         <div class="gpt-bubble">Hi! I'm Gemini. Ask me to explain calculations, solve problems, or anything you need.</div>
                     </div>
@@ -533,14 +531,14 @@ function initGpt() {
     document.getElementById('gpt-key-input').addEventListener('keydown', e => { if (e.key === 'Enter') saveApiKey(); });
 }
 
-const geminiAvatar = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" fill="#fff"/></svg>`;
+const geminiAvatar = ``;
 
 function gptAppendMsg(role, text) {
     const wrap = document.getElementById('gpt-messages');
     const div = document.createElement('div');
     div.className = 'gpt-msg ' + role;
     if (role === 'ai') {
-        div.innerHTML = `<div class="gpt-avatar ai"><svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gy" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4285f4"/><stop offset="50%" stop-color="#9b72cb"/><stop offset="100%" stop-color="#d96570"/></linearGradient></defs><path d="M14 2C14 2 15.5 9 19 13C23 17 26 18.5 26 18.5C26 18.5 23 20 19 24C15.5 27.5 14 26 14 26C14 26 12.5 27.5 9 24C5 20 2 18.5 2 18.5C2 18.5 5 17 9 13C12.5 9 14 2 14 2Z" fill="url(#gy)"/></svg></div><div class="gpt-bubble">${text.replace(/\n/g,'<br>')}</div>`;
+        div.innerHTML = `<div class="gpt-avatar ai">✦</div><div class="gpt-bubble">${text.replace(/\n/g,'<br>')}</div>`;
     } else {
         div.innerHTML = `<div class="gpt-bubble">${text.replace(/\n/g,'<br>')}</div><div class="gpt-avatar user">You</div>`;
     }
@@ -553,7 +551,7 @@ function gptShowTyping() {
     const div = document.createElement('div');
     div.className = 'gpt-msg ai';
     div.id = 'gpt-typing-indicator';
-    div.innerHTML = `<div class="gpt-avatar ai"><svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="gy" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4285f4"/><stop offset="50%" stop-color="#9b72cb"/><stop offset="100%" stop-color="#d96570"/></linearGradient></defs><path d="M14 2C14 2 15.5 9 19 13C23 17 26 18.5 26 18.5C26 18.5 23 20 19 24C15.5 27.5 14 26 14 26C14 26 12.5 27.5 9 24C5 20 2 18.5 2 18.5C2 18.5 5 17 9 13C12.5 9 14 2 14 2Z" fill="url(#gy)"/></svg></div><div class="gpt-bubble"><div class="gpt-typing"><div class="gpt-dot"></div><div class="gpt-dot"></div><div class="gpt-dot"></div></div></div>`;
+    div.innerHTML = `<div class="gpt-avatar ai">✦</div><div class="gpt-bubble"><div class="gpt-typing"><div class="gpt-dot"></div><div class="gpt-dot"></div><div class="gpt-dot"></div></div></div>`;
     wrap.appendChild(div);
     wrap.scrollTop = wrap.scrollHeight;
 }
