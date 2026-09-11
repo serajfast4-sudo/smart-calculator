@@ -228,6 +228,83 @@
         .gpt-key-change { background:none; border:none; box-shadow:none; color:var(--muted); font-size:0.72rem; padding:0; cursor:pointer; }
         .gpt-key-change::before { display:none; }
 
+
+        /* ── LIGHT THEME ── */
+        body.light {
+            background: radial-gradient(ellipse at 30% 20%, rgba(99,102,241,0.06) 0%, transparent 60%),
+                        radial-gradient(ellipse at 75% 75%, rgba(52,211,153,0.04) 0%, transparent 55%),
+                        #f0f2f8;
+            --text: rgba(0,0,0,0.88);
+            --muted: rgba(0,0,0,0.35);
+            --accent: rgba(0,0,0,0.5);
+        }
+        body.light .screen { background:rgba(255,255,255,0.85); border-color:rgba(0,0,0,0.08); }
+        body.light .tab-bar { background:rgba(0,0,0,0.05); border-color:rgba(0,0,0,0.07); }
+        body.light .tab.active { background:rgba(0,0,0,0.1); }
+        body.light button { border-color:rgba(0,0,0,0.1); box-shadow:inset 0 0.5px 0 rgba(255,255,255,0.8), 0 2px 6px rgba(0,0,0,0.1); }
+        body.light button::before { background:rgba(255,255,255,0.9); }
+        body.light .b-num { background:rgba(0,0,0,0.04); }
+        body.light .b-op  { background:rgba(0,0,0,0.07); }
+        body.light .b-sci { background:rgba(0,0,0,0.02); }
+        body.light .tape { background:rgba(240,242,248,0.97); border-left-color:rgba(0,0,0,0.08); }
+        body.light .money-card, body.light .phy-formula-card { background:rgba(0,0,0,0.03); border-color:rgba(0,0,0,0.07); }
+        body.light .gpt-msg.ai .gpt-bubble { background:rgba(0,0,0,0.05); border-color:rgba(0,0,0,0.08); }
+        body.light .gpt-key-input, body.light .gpt-input { background:rgba(0,0,0,0.04); border-color:rgba(0,0,0,0.1); }
+        body.light .settings-drawer { background:rgba(240,242,248,0.98); }
+
+        /* ── SETTINGS OVERLAY ── */
+        .settings-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:200; display:flex; align-items:flex-end; transition:opacity 0.25s; }
+        .settings-overlay.hidden { display:none; }
+        .settings-drawer { background:rgba(10,10,22,0.97); backdrop-filter:blur(30px); -webkit-backdrop-filter:blur(30px); border-top:0.5px solid rgba(255,255,255,0.1); border-radius:24px 24px 0 0; width:100%; max-height:88vh; overflow-y:auto; padding:0 0 36px; scrollbar-width:none; }
+        .settings-drawer::-webkit-scrollbar { display:none; }
+        .settings-handle { width:36px; height:4px; background:rgba(255,255,255,0.18); border-radius:2px; margin:14px auto 10px; }
+        .settings-title { font-size:1rem; font-weight:600; color:var(--text); padding:0 20px 14px; border-bottom:0.5px solid rgba(255,255,255,0.07); margin-bottom:8px; }
+
+        .settings-section { padding:14px 20px 0; }
+        .settings-section-label { font-size:0.62rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+
+        .settings-row { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:0.5px solid rgba(255,255,255,0.05); }
+        .settings-row:last-child { border-bottom:none; }
+        .settings-row-left { display:flex; flex-direction:column; gap:2px; }
+        .settings-row-title { font-size:0.88rem; font-weight:500; color:var(--text); }
+        .settings-row-sub { font-size:0.7rem; color:var(--muted); }
+
+        /* Toggle */
+        .s-toggle { position:relative; width:46px; height:26px; flex-shrink:0; }
+        .s-toggle input { opacity:0; width:0; height:0; }
+        .s-toggle-track { position:absolute; inset:0; background:rgba(255,255,255,0.12); border-radius:13px; cursor:pointer; transition:background 0.2s; border:0.5px solid rgba(255,255,255,0.08); }
+        .s-toggle-track:before { content:''; position:absolute; width:20px; height:20px; left:2px; top:2px; background:#fff; border-radius:50%; transition:transform 0.2s; box-shadow:0 1px 4px rgba(0,0,0,0.3); }
+        .s-toggle input:checked + .s-toggle-track { background:var(--blue); border-color:rgba(56,189,248,0.3); }
+        .s-toggle input:checked + .s-toggle-track:before { transform:translateX(20px); }
+
+        /* Theme pills */
+        .theme-pills { display:flex; gap:8px; }
+        .theme-pill { padding:6px 14px; border-radius:20px; border:0.5px solid rgba(255,255,255,0.1); font-size:0.75rem; font-weight:600; cursor:pointer; transition:all 0.15s; color:var(--muted); background:rgba(255,255,255,0.04); }
+        .theme-pill.active { border-color:var(--blue); color:var(--blue); background:rgba(56,189,248,0.1); }
+
+        /* Accent colors */
+        .accent-dots { display:flex; gap:10px; }
+        .accent-dot { width:26px; height:26px; border-radius:50%; cursor:pointer; border:2px solid transparent; transition:transform 0.15s, border-color 0.15s; flex-shrink:0; }
+        .accent-dot.active { border-color:#fff; transform:scale(1.15); }
+
+        /* Corner radius */
+        .radius-pills { display:flex; gap:8px; }
+        .radius-pill { padding:6px 14px; border-radius:20px; border:0.5px solid rgba(255,255,255,0.1); font-size:0.75rem; font-weight:600; cursor:pointer; color:var(--muted); background:rgba(255,255,255,0.04); transition:all 0.15s; }
+        .radius-pill.active { border-color:var(--blue); color:var(--blue); background:rgba(56,189,248,0.1); }
+
+        /* Tip jar */
+        .tip-jar { margin:16px 20px 0; background:rgba(255,255,255,0.04); border:0.5px solid rgba(255,255,255,0.08); border-radius:18px; padding:16px; }
+        .tip-jar-title { font-size:0.88rem; font-weight:600; color:var(--text); margin-bottom:4px; }
+        .tip-jar-sub { font-size:0.72rem; color:var(--muted); margin-bottom:14px; line-height:1.5; }
+        .tip-amounts { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px; }
+        .tip-amt { padding:8px 16px; border-radius:20px; border:0.5px solid rgba(255,255,255,0.1); font-size:0.82rem; font-weight:600; color:var(--muted); background:rgba(255,255,255,0.04); cursor:pointer; transition:all 0.15s; }
+        .tip-amt.sel { background:rgba(52,211,153,0.18); border-color:rgba(52,211,153,0.35); color:var(--green); }
+        .tip-custom-row { display:flex; gap:8px; }
+        .tip-custom-input { flex:1; background:rgba(255,255,255,0.05); border:0.5px solid rgba(255,255,255,0.1); border-radius:12px; padding:9px 12px; color:var(--text); font-size:0.85rem; outline:none; font-family:inherit; }
+        .tip-send-btn { background:rgba(52,211,153,0.2); border:0.5px solid rgba(52,211,153,0.3); border-radius:12px; padding:9px 16px; color:var(--green); font-size:0.85rem; font-weight:600; cursor:pointer; flex-shrink:0; white-space:nowrap; }
+        .tip-send-btn::before { display:none; }
+        .tip-thanks { font-size:0.8rem; color:var(--green); text-align:center; margin-top:10px; display:none; }
+
         /* ── TAPE ── */
         .tape { position:fixed; top:0; right:-100%; width:82%; max-width:320px; height:100%; background:rgba(8,8,14,0.94); backdrop-filter:blur(30px); -webkit-backdrop-filter:blur(30px); border-left:0.5px solid rgba(255,255,255,0.08); box-shadow:-20px 0 60px rgba(0,0,0,0.7); transition:right 0.3s cubic-bezier(0.4,0,0.2,1); z-index:100; padding:28px 16px 20px; display:flex; flex-direction:column; }
         .tape.open { right:0; }
@@ -248,6 +325,7 @@
     <div class="top-bar">
         <button class="deg-toggle" id="deg-btn" onclick="tap();toggleDeg()">DEG</button>
         <button class="tape-btn" onclick="tap();toggleTape()">📋 Tape</button>
+        <button class="tape-btn" onclick="tap();openSettings()" style="border-color:rgba(255,255,255,0.15);">⚙️</button>
     </div>
 
     <div class="screen" onclick="copyResult()">
@@ -449,7 +527,7 @@
                         <div class="gpt-header-sub">Powered by Google Gemini</div>
                     </div>
                     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-                        <select id="gemini-model-select" class="gpt-model-tag" style="border:none;cursor:pointer;outline:none;font-size:0.6rem;font-weight:600;padding:3px 6px;appearance:none;-webkit-appearance:none;background:rgba(66,133,244,0.15);color:#4285f4;border-radius:20px;border:0.5px solid rgba(66,133,244,0.25);"><option value="gemini-2.5-pro">2.5 Pro</option><option value="gemini-2.5-flash">2.5 Flash</option><option value="gemini-2.0-flash">2.0 Flash</option><option value="gemini-1.5-pro">1.5 Pro</option><option value="gemini-1.5-flash">1.5 Flash</option><option value="gemini-1.0-pro">1.0 Pro</option></select>
+                        <select id="gemini-model-select" class="gpt-model-tag" style="border:none;cursor:pointer;outline:none;font-size:0.6rem;font-weight:600;padding:3px 6px;appearance:none;-webkit-appearance:none;background:rgba(66,133,244,0.15);color:#4285f4;border-radius:20px;border:0.5px solid rgba(66,133,244,0.25);"><option value="gemini-3.8-flash">3.8 Flash</option><option value="gemini-3.6-flash" selected>3.6 Flash</option><option value="gemini-3.5-flash">3.5 Flash</option><option value="gemini-3.5-flash-lite">3.5 Flash Lite</option><option value="gemini-2.5-pro">2.5 Pro</option><option value="gemini-2.5-flash">2.5 Flash</option><option value="gemini-2.0-flash">2.0 Flash</option></select>
                         <button class="gpt-key-change" onclick="showKeyScreen()">change key</button>
                     </div>
                 </div>
@@ -472,6 +550,137 @@
 
     </div>
 </div>
+
+<!-- SETTINGS OVERLAY -->
+<div class="settings-overlay hidden" id="settings-overlay" onclick="closeSettingsIfBg(event)">
+  <div class="settings-drawer" id="settings-drawer">
+    <div class="settings-handle"></div>
+    <div class="settings-title">Settings</div>
+
+    <!-- APPEARANCE -->
+    <div class="settings-section">
+      <div class="settings-section-label">Appearance</div>
+
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-row-title">Theme</div>
+          <div class="settings-row-sub">Switch between dark and light</div>
+        </div>
+        <div class="theme-pills">
+          <div class="theme-pill active" id="theme-dark" onclick="setTheme('dark')">Dark</div>
+          <div class="theme-pill" id="theme-light" onclick="setTheme('light')">Light</div>
+        </div>
+      </div>
+
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-row-title">Accent color</div>
+          <div class="settings-row-sub">Buttons and highlights</div>
+        </div>
+        <div class="accent-dots">
+          <div class="accent-dot active" style="background:#38bdf8" onclick="setAccent('#38bdf8','rgba(56,189,248,0.3)')" id="acc-blue"></div>
+          <div class="accent-dot" style="background:#a78bfa" onclick="setAccent('#a78bfa','rgba(167,139,250,0.3)')" id="acc-purple"></div>
+          <div class="accent-dot" style="background:#34d399" onclick="setAccent('#34d399','rgba(52,211,153,0.3)')" id="acc-green"></div>
+          <div class="accent-dot" style="background:#fb923c" onclick="setAccent('#fb923c','rgba(251,146,60,0.3)')" id="acc-orange"></div>
+          <div class="accent-dot" style="background:#f87171" onclick="setAccent('#f87171','rgba(248,113,113,0.3)')" id="acc-red"></div>
+        </div>
+      </div>
+
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-row-title">Corner style</div>
+          <div class="settings-row-sub">Button and card roundness</div>
+        </div>
+        <div class="radius-pills">
+          <div class="radius-pill" id="r-sharp" onclick="setRadius('sharp')">Sharp</div>
+          <div class="radius-pill active" id="r-round" onclick="setRadius('round')">Round</div>
+          <div class="radius-pill" id="r-pill" onclick="setRadius('pill')">Pill</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CALCULATOR -->
+    <div class="settings-section" style="margin-top:8px;">
+      <div class="settings-section-label">Calculator</div>
+
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-row-title">Vibration feedback</div>
+          <div class="settings-row-sub">Haptic tap on button press</div>
+        </div>
+        <label class="s-toggle">
+          <input type="checkbox" id="toggle-haptic" checked onchange="saveSettings()">
+          <div class="s-toggle-track"></div>
+        </label>
+      </div>
+
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-row-title">Large display text</div>
+          <div class="settings-row-sub">Bigger numbers on screen</div>
+        </div>
+        <label class="s-toggle">
+          <input type="checkbox" id="toggle-large" onchange="applyLargeText(this.checked);saveSettings()">
+          <div class="s-toggle-track"></div>
+        </label>
+      </div>
+
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-row-title">Auto-copy result</div>
+          <div class="settings-row-sub">Copy to clipboard after = tap</div>
+        </div>
+        <label class="s-toggle">
+          <input type="checkbox" id="toggle-autocopy" onchange="saveSettings()">
+          <div class="s-toggle-track"></div>
+        </label>
+      </div>
+
+    </div>
+
+    <!-- GEMINI AI -->
+    <div class="settings-section" style="margin-top:8px;">
+      <div class="settings-section-label">Gemini AI</div>
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-row-title">Change API key</div>
+          <div class="settings-row-sub">Update your Gemini key</div>
+        </div>
+        <button onclick="tap();closeSettings();switchTab('gpt');setTimeout(showKeyScreen,300)" style="background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.1);border-radius:12px;padding:7px 14px;font-size:0.75rem;color:var(--muted);">Change →</button>
+      </div>
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-row-title">Clear chat history</div>
+          <div class="settings-row-sub">Wipe Gemini conversation</div>
+        </div>
+        <button onclick="tap();clearGeminiHistory()" style="background:rgba(180,40,40,0.2);border:0.5px solid rgba(180,40,40,0.3);border-radius:12px;padding:7px 14px;font-size:0.75rem;color:var(--red);">Clear</button>
+      </div>
+    </div>
+
+    <!-- TIP JAR -->
+    <div class="tip-jar">
+      <div class="tip-jar-title">☕ Tip Jar</div>
+      <div class="tip-jar-sub">Enjoying Smart Calculator? A small tip helps fund new features and improvements. 100% optional — thank you! 🙏</div>
+      <div class="tip-amounts">
+        <div class="tip-amt" onclick="selectTipAmt(this,'1')">$1</div>
+        <div class="tip-amt" onclick="selectTipAmt(this,'3')">$3</div>
+        <div class="tip-amt" onclick="selectTipAmt(this,'5')">$5</div>
+        <div class="tip-amt" onclick="selectTipAmt(this,'10')">$10</div>
+        <div class="tip-amt" onclick="selectTipAmt(this,'20')">$20</div>
+      </div>
+      <div class="tip-custom-row">
+        <input class="tip-custom-input" id="tip-custom" type="number" placeholder="Custom amount ($)" min="1"/>
+        <button class="tip-send-btn" onclick="sendTip()">Send Tip 💚</button>
+      </div>
+      <div class="tip-thanks" id="tip-thanks">Thank you so much! 🎉 You're amazing.</div>
+    </div>
+
+    <!-- VERSION -->
+    <div style="text-align:center;padding:20px 20px 0;font-size:0.65rem;color:rgba(255,255,255,0.15);">Smart Calculator v1.0 · Built with ✦ Gemini</div>
+  </div>
+</div>
+
 
 <!-- Tape -->
 <div class="tape" id="tape">
@@ -740,6 +949,100 @@ function tick(){if(!running)return;const dt=0.016,e=parseFloat(document.getEleme
 function drawBall(b){const ctx=simCtx;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fillStyle=b.col;ctx.fill();ctx.strokeStyle='rgba(255,255,255,0.2)';ctx.lineWidth=1;ctx.stroke();ctx.fillStyle='rgba(255,255,255,0.85)';ctx.font=`${Math.max(9,b.r*0.55)}px system-ui`;ctx.textAlign='center';ctx.fillText(b.m+'kg',b.x,b.y+4);if(Math.abs(b.vx)>5){const dir=Math.sign(b.vx),alen=Math.min(Math.abs(b.vx)*0.3,50);ctx.strokeStyle=b.col;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(b.x,b.y);ctx.lineTo(b.x+dir*alen,b.y);ctx.stroke();ctx.beginPath();ctx.moveTo(b.x+dir*alen,b.y);ctx.lineTo(b.x+dir*(alen-8),b.y-5);ctx.lineTo(b.x+dir*(alen-8),b.y+5);ctx.closePath();ctx.fillStyle=b.col;ctx.fill();}}
 function draw(){clr();drawGround(groundY());if(b1)drawBall(b1);if(b2)drawBall(b2);if(collided){simCtx.fillStyle='rgba(255,255,255,0.15)';simCtx.font='11px system-ui';simCtx.textAlign='center';simCtx.fillText('COLLISION',W()/2,30);}}
 return{init,reset,launch,tick};})();
+
+// ══════════ SETTINGS ══════════
+function openSettings(){ document.getElementById('settings-overlay').classList.remove('hidden'); }
+function closeSettings(){ document.getElementById('settings-overlay').classList.add('hidden'); }
+function closeSettingsIfBg(e){ if(e.target===document.getElementById('settings-overlay')) closeSettings(); }
+
+function setTheme(t){
+    document.body.classList.toggle('light', t==='light');
+    document.getElementById('theme-dark').classList.toggle('active', t==='dark');
+    document.getElementById('theme-light').classList.toggle('active', t==='light');
+    localStorage.setItem('sc_theme', t);
+}
+
+function setAccent(color, borderColor){
+    document.documentElement.style.setProperty('--blue', color);
+    document.getElementById('deg-btn').style.borderColor = borderColor;
+    document.querySelectorAll('.accent-dot').forEach(d=>d.classList.remove('active'));
+    saveSettings();
+}
+
+function setRadius(r){
+    const map = {sharp:'6px', round:'18px', pill:'28px'};
+    const btnMap = {sharp:'6px', round:'18px', pill:'28px'};
+    document.querySelectorAll('button:not(.tip-send-btn):not(.tape-clear-btn):not(.exp-del)').forEach(b=>{
+        b.style.borderRadius = map[r];
+    });
+    document.querySelectorAll('.tab').forEach(b=>b.style.borderRadius = r==='sharp'?'6px':r==='pill'?'14px':'11px');
+    document.querySelectorAll('.radius-pill').forEach(p=>p.classList.remove('active'));
+    document.getElementById('r-'+r).classList.add('active');
+    localStorage.setItem('sc_radius', r);
+}
+
+function applyLargeText(on){
+    document.getElementById('out').style.fontSize = on ? '3.4rem' : '2.8rem';
+}
+
+function clearGeminiHistory(){
+    geminiHistory.length = 0;
+    const msgs = document.getElementById('gpt-messages');
+    if(msgs) msgs.innerHTML = '<div class="gpt-msg ai"><div class="gpt-avatar ai">✦</div><div class="gpt-bubble">Chat cleared. How can I help?</div></div>';
+    closeSettings();
+}
+
+function selectTipAmt(el, amt){
+    document.querySelectorAll('.tip-amt').forEach(b=>b.classList.remove('sel'));
+    el.classList.add('sel');
+    document.getElementById('tip-custom').value = amt;
+}
+
+function sendTip(){
+    const amt = document.getElementById('tip-custom').value;
+    if(!amt || parseFloat(amt) < 1) return;
+    document.getElementById('tip-thanks').style.display = 'block';
+    document.querySelectorAll('.tip-amt').forEach(b=>b.classList.remove('sel'));
+    document.getElementById('tip-custom').value = '';
+    // Open a payment link — replace with your actual link
+    window.open('https://buymeacoffee.com', '_blank');
+}
+
+function saveSettings(){
+    localStorage.setItem('sc_haptic', document.getElementById('toggle-haptic').checked);
+    localStorage.setItem('sc_large', document.getElementById('toggle-large').checked);
+    localStorage.setItem('sc_autocopy', document.getElementById('toggle-autocopy').checked);
+}
+
+function loadSettings(){
+    const theme = localStorage.getItem('sc_theme') || 'dark';
+    setTheme(theme);
+    const radius = localStorage.getItem('sc_radius') || 'round';
+    setRadius(radius);
+    const haptic = localStorage.getItem('sc_haptic');
+    if(haptic !== null) document.getElementById('toggle-haptic').checked = haptic === 'true';
+    const large = localStorage.getItem('sc_large');
+    if(large === 'true'){ document.getElementById('toggle-large').checked = true; applyLargeText(true); }
+    const autocopy = localStorage.getItem('sc_autocopy');
+    if(autocopy !== null) document.getElementById('toggle-autocopy').checked = autocopy === 'true';
+}
+
+// Hook haptic into tap()
+const _origTap = tap;
+window.tap = function(){ if(document.getElementById('toggle-haptic').checked && navigator.vibrate) navigator.vibrate(8); }
+
+// Hook auto-copy into calc()
+const _origCalc = calc;
+window.calc = function(){
+    _origCalc();
+    if(document.getElementById('toggle-autocopy').checked){
+        const v = document.getElementById('out').textContent;
+        if(v && v !== '0' && v !== 'Error' && navigator.clipboard) navigator.clipboard.writeText(v);
+    }
+}
+
+loadSettings();
+
 </script>
 </body>
 </html>
